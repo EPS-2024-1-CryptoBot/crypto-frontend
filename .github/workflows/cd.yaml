@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          path: '/frontend'
+          path: './frontend'
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
