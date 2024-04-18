@@ -1,0 +1,10 @@
+services:
+  frontend:
+    image: crypto-frontend:dev
+    build: .
+    restart: unless-stopped
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    ports:
+      - "3000:3000"
