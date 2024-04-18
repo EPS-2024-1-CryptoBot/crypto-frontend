@@ -1,0 +1,10 @@
+FROM node:21.7.3-slim AS base
+WORKDIR /app
+COPY ./package*.json ./
+RUN npm install
+
+FROM base AS dev
+ENV NODE_ENV development
+WORKDIR /app
+COPY . .
+CMD ["npm","start"]
