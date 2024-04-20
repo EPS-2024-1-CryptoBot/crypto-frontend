@@ -12,5 +12,5 @@ FROM node:18.17.0-alpine AS production
 ENV NODE_ENV production
 RUN npm install -g serve
 WORKDIR /srv
-COPY --from=dist /app/dist ./
-CMD serve -s .
+COPY --from=build /app/build ./
+CMD serve -l 3000 -s .
