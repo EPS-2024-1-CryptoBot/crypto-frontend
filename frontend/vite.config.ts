@@ -12,4 +12,7 @@ export default defineConfig({
     strictPort: true,
     port: 5173, // replace this port with any number you want
   },
+  build: {
+    outDir: './build'
+  }
 })
