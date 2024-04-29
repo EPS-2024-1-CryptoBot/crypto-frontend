@@ -6,8 +6,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup
+  signInWithPopup,
+  UserCredential
 } from 'firebase/auth';
+import { api } from '../config/api';
 
 interface AuthContextType {
   user: any;
@@ -23,13 +25,27 @@ const AuthProvider = ({ children }: any) => {
   const [currentUser, setCurrentUser] = useState<User | null>();
   const [loading, setLoading] = useState(true);
 
-  // Signs in on firebase with email and password.
+  // Signs in on firebase with email and password and then validates the user on the backend
   const signInWithMailAndPassword = async (email: string, password: string) => {
     const auth = getAuth(app);
     const result = await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential: any) => {
+      .then(async (userCredential: UserCredential) => {
         const user = userCredential.user;
         setCurrentUser(user);
+
+        try {
+          const result = await api.post('/auth/login', {
+            email,
+            token: await userCredential.user.getIdToken()
+          });
+
+          if (result.data.token) {
+            localStorage.setItem('token', result.data.token);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
         return true;
       })
       .catch((error) => {
@@ -75,6 +91,7 @@ const AuthProvider = ({ children }: any) => {
   const logout = async () => {
     const auth = getAuth(app);
     await auth.signOut();
+    localStorage.removeItem('token');
   };
 
   useEffect(() => {

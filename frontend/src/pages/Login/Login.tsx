@@ -1,11 +1,9 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 import { api } from '../../config/api';
-import { app } from '../../config/firebase';
-import { getAuth } from 'firebase/auth';
 
 const Login = () => {
-  const { signUpWithMailAndPassword, user } = useContext(AuthContext);
+  const { signInWithMailAndPassword } = useContext(AuthContext);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -13,20 +11,11 @@ const Login = () => {
     console.log(e);
     const email = e.target[0].value;
     const password = e.target[1].value;
-    const result = await signUpWithMailAndPassword(email, password);
-    if (result) {
-      console.log('Sign up success');
-    } else {
-      console.log('Sign up failed');
-    }
+    await signInWithMailAndPassword(email, password);
+  };
 
-    const token = await getAuth(app).currentUser?.getIdToken();
-
-    console.log(token);
-
-    const apiCall = await api.get('/users/profile', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+  const handleForgotPassword = async () => {
+    const apiCall = await api.post('/auth/logout');
     console.log(apiCall);
   };
 
@@ -64,6 +53,7 @@ const Login = () => {
             </button>
             <a
               className="inline-block align-baseline font-bold text-sm text-blue-950 hover:text-blue-800"
+              onClick={handleForgotPassword}
               href="#">
               Forgot Password?
             </a>
