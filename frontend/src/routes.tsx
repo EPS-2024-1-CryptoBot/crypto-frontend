@@ -11,6 +11,7 @@ const AppRoutes = () => {
       <Navbar />
       <Routes>
         <Route Component={Home} path="/" />
+        
         <Route Component={Login} path="/login" />
         <Route Component={News} path="/news" />
         <Route Component={Crypto} path="/crypto" />

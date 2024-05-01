@@ -1,48 +1,53 @@
+
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Logo from "../../assets/logobot.png";
 import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from '../../contexts/authContext';
+import { api } from '../../config/api'; ``
 
 const Login = () => {
-
+  const { signInWithMailAndPassword, signUpWithMailAndPassword } = useContext(AuthContext);
   const [forgotPassword, setForgotPassword] = useState(false);
 
+  const handleForgotPassword = async () => {
+    const apiCall = await api.post('/auth/logout');
+    console.log(apiCall);
+  };
 
-  const handleLogin = (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
-    const username = (event.target as any).username.value;
-    console.log("Username", username)
+    const email = (event.target as any).email.value;
     const password = (event.target as any).password.value;
-    console.log("Login", event.target);
+    await signInWithMailAndPassword(email, password);
   }
 
   const handleRegister = (event: React.FormEvent) => {
     event.preventDefault();
     const username = (event.target as any).username.value;
-    console.log("Username", username)
     const email = (event.target as any).email.value;
     const password = (event.target as any).password.value;
-    
-    console.log("Register", event.target);
+    const confirmPassword = (event.target as any).confirm_password.value;
+
+    if (password !== confirmPassword) {
+      alert('As senhas não coincidem');
+      return;
+    }
+
+    signUpWithMailAndPassword(email, password, username);
+
   }
 
-
   return (
-    // <div className="h-full w-full flex justify-center items- bg-secondary">
     <div className="w-full h-full  bg-white flex flex-col lg:flex-row rounded-lg shadow-lg">
-
-      {/* Lado esquerdo com conteúdo de boas-vindas */}
       <div className="w-full lg:w-7/12 h-full bg-primary flex justify-center items-center text-white text-3xl">
         <div className="w-full lg:w-3/4 h-full flex flex-col justify-center items-center text-center">
-          {/* Logo */}
           <div className="flex flex-col justify-center items-center mt-4">
             <img src={Logo} alt="logo" className="w-1/3 lg:w-2/4 rounded-full mb-4" />
           </div>
-          {/* Texto de boas-vindas */}
           <div className="mb-4">
             <h1 className="text-4xl lg:text-5xl font-bold">Welcome to</h1>
             <h2 className="text-2xl lg:text-3xl">CryptoBot UnB</h2>
           </div>
-          {/* Texto de descrição */}
           <div className="mb-4 text-sm lg:text-base">
             <p>
               To keep connected with us please login with your personal info
@@ -57,16 +62,13 @@ const Login = () => {
         </div>
       </div>
 
-      {/* Lado direito com formulário */}
       <div className="w-full lg:w-5/12 h-full flex justify-center items-center mt-4 lg:mt-0 lg:p-4 lg:pt-52">
-        
-        {/* Abas de login e registro */}
-        
+
+
         {!forgotPassword && <Tabs
           className="w-full h-full"
           selectedTabClassName="border-b-2 border-primary"
         >
-          {/* Lista de abas */}
           <TabList className="w-full flex justify-center items-center">
             <Tab className="m-2 nav-item">
               <span className="nav-link text-xl lg:text-3xl cursor-pointer">Entrar</span>
@@ -76,13 +78,12 @@ const Login = () => {
             </Tab>
           </TabList>
 
-          {/* Painel de login */}
           <TabPanel>
             <form className="flex flex-col items-center justify-center" onSubmit={handleLogin}>
               <input
-                id="username"
-                type="text"
-                placeholder="Username"
+                id="email"
+                type="email"
+                placeholder="Email"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
@@ -102,7 +103,6 @@ const Login = () => {
             </form>
           </TabPanel>
 
-          {/* Painel de registro */}
           <TabPanel>
             <form className="flex flex-col items-center justify-center" onSubmit={handleRegister}>
               <input
@@ -113,12 +113,18 @@ const Login = () => {
               />
               <input
                 id="email"
+                type="email"
+                placeholder="Email"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
+              />
+              <input
+                id="password"
                 type="password"
                 placeholder="Password"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
-                id="confirm-password"
+                id="confirm_password"
                 type="password"
                 placeholder="Confirm Password"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
@@ -144,6 +150,7 @@ const Login = () => {
               className="w-full p-2 m-2 border border-gray-300 rounded"
             />
             <button
+              onClick={handleForgotPassword}
               className="w-full p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300">
               Enviar
             </button>
@@ -155,7 +162,6 @@ const Login = () => {
 
       </div>
     </div>
-    //  </div>
   );
 };
 
