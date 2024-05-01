@@ -1,7 +1,10 @@
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Logo from "../../assets/logobot.png";
+import React, { useState, useEffect, useContext } from "react";
 
 const Login = () => {
+
+  const [forgotPassword, setForgotPassword] = useState(false);
 
 
   const handleLogin = (event: React.FormEvent) => {
@@ -55,8 +58,11 @@ const Login = () => {
       </div>
 
       {/* Lado direito com formulário */}
-      <div className="w-full lg:w-5/12 h-full flex justify-center items-center mt-4 lg:mt-0 lg:p-4 lg:pt-40">
-        <Tabs
+      <div className="w-full lg:w-5/12 h-full flex justify-center items-center mt-4 lg:mt-0 lg:p-4 lg:pt-52">
+        
+        {/* Abas de login e registro */}
+        
+        {!forgotPassword && <Tabs
           className="w-full h-full"
           selectedTabClassName="border-b-2 border-primary"
         >
@@ -77,20 +83,20 @@ const Login = () => {
                 id="username"
                 type="text"
                 placeholder="Username"
-                className="w-4/5 lg:w-1/2 p-2 m-2 border border-gray-300 rounded"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
                 id="password"
                 type="password"
                 placeholder="Password"
-                className="w-4/5 lg:w-1/2 p-2 m-2 border border-gray-300 rounded"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
-              <a href="#" className="text-primary text-sm lg:text-base">
+              <span onClick={() => setForgotPassword(true)} className="text-primary text-sm lg:text-base cursor-pointer hover:text-secondary">
                 Esqueceu a senha?
-              </a>
+              </span>
               <button
                 type="submit"
-                className="w-4/5 lg:w-1/2 p-2 m-2 bg-primary text-white rounded">
+                className=" w-4/6 min-w-5/6 p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300">
                 Entrar
               </button>
             </form>
@@ -103,28 +109,50 @@ const Login = () => {
                 id="username"
                 type="text"
                 placeholder="Username"
-                className="w-4/5 lg:w-1/2 p-2 m-2 border border-gray-300 rounded"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
                 id="email"
                 type="password"
                 placeholder="Password"
-                className="w-4/5 lg:w-1/2 p-2 m-2 border border-gray-300 rounded"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
                 id="confirm-password"
                 type="password"
                 placeholder="Confirm Password"
-                className="w-4/5 lg:w-1/2 p-2 m-2 border border-gray-300 rounded"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <button
                 type="submit"
-                className="w-4/5 lg:w-1/2 p-2 m-2 bg-primary text-white rounded">
+                className=" w-4/6 min-w-5/6 p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300">
                 Registrar
               </button>
             </form>
           </TabPanel>
-        </Tabs>
+        </Tabs>}
+
+        {forgotPassword && (
+          <div className="h-full flex flex-col items-center w-4/6 min-w-5/6">
+            <h1 className="text-2xl lg:text-3xl">Redefinir senha</h1>
+            <p className="text-sm lg:text-base text-center">
+              Insira seu email para redefinir sua senha
+            </p>
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full p-2 m-2 border border-gray-300 rounded"
+            />
+            <button
+              className="w-full p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300">
+              Enviar
+            </button>
+            <span onClick={() => setForgotPassword(false)} className="text-primary text-sm lg:text-base cursor-pointer hover:text-secondary">
+              Voltar
+            </span>
+          </div>
+        )}
+
       </div>
     </div>
     //  </div>
