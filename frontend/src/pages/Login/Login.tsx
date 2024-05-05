@@ -3,11 +3,24 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Logo from "../../assets/logobot.png";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from '../../contexts/authContext';
-import { api } from '../../config/api'; ``
+import { api } from '../../config/api';
+import { redirect, useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const { signInWithMailAndPassword, signUpWithMailAndPassword } = useContext(AuthContext);
+  const { signInWithMailAndPassword, signUpWithMailAndPassword, user, loading } = useContext(AuthContext);
   const [forgotPassword, setForgotPassword] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (user) {
+      console.log('User logged in', user);
+      redirectToHome();
+    }
+
+  }, [user]);
+
+  const redirectToHome = () => {
+    navigate('/');
+  };
 
   const handleForgotPassword = async () => {
     const apiCall = await api.post('/auth/logout');
@@ -21,20 +34,28 @@ const Login = () => {
     await signInWithMailAndPassword(email, password);
   }
 
-  const handleRegister = (event: React.FormEvent) => {
-    event.preventDefault();
-    const username = (event.target as any).username.value;
-    const email = (event.target as any).email.value;
-    const password = (event.target as any).password.value;
-    const confirmPassword = (event.target as any).confirm_password.value;
+  const handleRegister = async (event: React.FormEvent) => {
+    try {
+      event.preventDefault();
+      const firstName = (event.target as any).first_name.value;
+      const lastName = (event.target as any).last_name.value;
+      const email = (event.target as any).email.value;
+      const password = (event.target as any).password.value;
+      const confirmPassword = (event.target as any).confirm_password.value;
 
-    if (password !== confirmPassword) {
-      alert('As senhas não coincidem');
-      return;
+      if (password !== confirmPassword) {
+        // alert('As senhas não coincidem');
+        throw new Error('As senhas não coincidem');
+        // return;
+      }
+
+      await signUpWithMailAndPassword(email, password, firstName, lastName);
+
+    } catch (error) {
+      console.error("ALERTA DE ERRO: ", error);
+      alert(error);
+
     }
-
-    signUpWithMailAndPassword(email, password, username);
-
   }
 
   return (
@@ -45,12 +66,14 @@ const Login = () => {
             <img src={Logo} alt="logo" className="w-1/3 lg:w-2/4 rounded-full mb-4" />
           </div>
           <div className="mb-4">
-            <h1 className="text-4xl lg:text-5xl font-bold">Welcome to</h1>
+            <h1 className="text-4xl lg:text-5xl font-bold">Bem-vindo ao</h1>
             <h2 className="text-2xl lg:text-3xl">CryptoBot UnB</h2>
           </div>
           <div className="mb-4 text-sm lg:text-base">
             <p>
-              To keep connected with us please login with your personal info
+              O CryptoBot UnB é uma plataforma de negociação de criptomoedas
+              que permite a compra e venda de ativos digitais de forma
+              descomplicada e segura.
             </p>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
@@ -79,36 +102,50 @@ const Login = () => {
           </TabList>
 
           <TabPanel>
+
             <form className="flex flex-col items-center justify-center" onSubmit={handleLogin}>
               <input
                 id="email"
                 type="email"
                 placeholder="Email"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
+                required
               />
               <input
                 id="password"
                 type="password"
                 placeholder="Password"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
+                required
               />
-              <span onClick={() => setForgotPassword(true)} className="text-primary text-sm lg:text-base cursor-pointer hover:text-secondary">
+              <span 
+              onClick={() => !loading && setForgotPassword(true)} className="text-primary text-sm lg:text-base cursor-pointer hover:text-secondary">
                 Esqueceu a senha?
               </span>
+
               <button
                 type="submit"
-                className=" w-4/6 min-w-5/6 p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300">
-                Entrar
+                className=" w-4/6 min-w-5/6 p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300"
+                disabled={loading}
+              >
+                {loading ? 'Carregando...' : 'Entrar'}
               </button>
             </form>
+
           </TabPanel>
 
           <TabPanel>
             <form className="flex flex-col items-center justify-center" onSubmit={handleRegister}>
               <input
-                id="username"
+                id="first_name"
                 type="text"
-                placeholder="Username"
+                placeholder="Nome"
+                className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
+              />
+              <input
+                id="last_name"
+                type="text"
+                placeholder="Sobrenome"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
@@ -120,18 +157,20 @@ const Login = () => {
               <input
                 id="password"
                 type="password"
-                placeholder="Password"
+                placeholder="Senha"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <input
                 id="confirm_password"
                 type="password"
-                placeholder="Confirm Password"
+                placeholder="Confirmar senha"
                 className=" w-4/6 min-w-5/6 p-2 m-2 border border-gray-300 rounded"
               />
               <button
                 type="submit"
-                className=" w-4/6 min-w-5/6 p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300">
+                className=" w-4/6 min-w-5/6 p-2 m-2 bg-primary text-white rounded hover:bg-secondary transition-all duration-300"
+                disabled={loading}
+              >
                 Registrar
               </button>
             </form>
