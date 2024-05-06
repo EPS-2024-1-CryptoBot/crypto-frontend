@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const News = () => {
     const [news, setNews] = useState([]);
@@ -14,11 +14,8 @@ const News = () => {
         const fetchNews = async () => {
             try {
 
-                const currentDate = formatDate(new Date());
-                // Crie a URL com a data formatada
+                const currentDate = formatDate(new Date());  
                 const url = `https://newsapi.org/v2/everything?q=crypto&from=${currentDate}&sortBy=publishedAt&apiKey=2121a18c88f8481693eed0703d3b4121`;
-
-                // Faça a requisição
                 const response = await fetch(url);
                 const data = await response.json();
                 console.log(data);

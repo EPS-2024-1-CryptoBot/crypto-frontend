@@ -33,7 +33,6 @@ const AuthProvider = ({ children }: any) => {
     const auth = getAuth(app);
     const result = await signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential: UserCredential) => {
-        const user = userCredential.user;
         
         try {
           const result = await api.post('/auth/login', {

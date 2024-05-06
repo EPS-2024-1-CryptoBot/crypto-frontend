@@ -4,7 +4,7 @@ import Logo from "../../assets/logobot.png";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from '../../contexts/authContext';
 import { api } from '../../config/api';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { signInWithMailAndPassword, signUpWithMailAndPassword, user, loading } = useContext(AuthContext);
@@ -43,10 +43,8 @@ const Login = () => {
       const password = (event.target as any).password.value;
       const confirmPassword = (event.target as any).confirm_password.value;
 
-      if (password !== confirmPassword) {
-        // alert('As senhas não coincidem');
+      if (password !== confirmPassword) {    
         throw new Error('As senhas não coincidem');
-        // return;
       }
 
       await signUpWithMailAndPassword(email, password, firstName, lastName);

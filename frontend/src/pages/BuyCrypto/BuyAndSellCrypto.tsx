@@ -1,15 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
-import { AuthContext } from '../../contexts/authContext';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import BuyAndSell from './components/BuyAndSell';
 import Deposit from './components/Deposit';
 const BuyCrypto = () => {
-    const { user } = useContext(AuthContext);
-    const [name, setName] = useState('');
-
-    useEffect(() => {
-        setName(user?.name || 'Ailton Aires');
-    }, [user]);
 
     return (
         <div>

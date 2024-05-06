@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { TabList, TabPanel, Tabs, Tab } from 'react-tabs';
-import BuyCoin from '../components/BuyCoin';
 
 const BuyAndSell = () => {
 
