@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: any) => {
             email,
             token: await userCredential.user.getIdToken()
           });
-          setCurrentUser(result.data);
+          setCurrentUser(result.data.user);
           console.log("result", result.data);
 
           if (result.data.token) {
