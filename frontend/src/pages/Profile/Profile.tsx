@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 
 const Profile = () => {
@@ -6,7 +6,7 @@ const Profile = () => {
     const [name, setName] = useState('');
 
     useEffect(() => {
-        setName(user?.name || 'Ailton Aires');
+        setName(user?.firstName || '');
     }, [user]);
 
     const handleEditProfile = async (event: React.FormEvent) => {

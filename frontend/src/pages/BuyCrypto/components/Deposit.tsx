@@ -32,7 +32,7 @@ const Deposit = () => {
 
                             <button
                                 type="submit"
-                                className="bg-primary text-white rounded p-2 mt-4 w-full md:w-full hover:bg-secondary transition-all duration-300 cursor-pointer mt-40"
+                                className="bg-primary text-white rounded p-2 mt-4 w-full md:w-full hover:bg-secondary transition-all duration-300 cursor-pointer"
                             >
                                 Depositar
                             </button>

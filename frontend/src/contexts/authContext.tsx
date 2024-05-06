@@ -1,15 +1,15 @@
-import { createContext, useEffect, useState } from 'react';
-import { app } from '../config/firebase';
 import {
-  getAuth,
-  User,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
   GoogleAuthProvider,
-  signInWithPopup,
+  User,
   UserCredential,
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
 } from 'firebase/auth';
+import { createContext, useEffect, useState } from 'react';
 import { api } from '../config/api';
+import { app } from '../config/firebase';
 
 interface AuthContextType {
   user: any;
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }: any) => {
             email,
             token: await userCredential.user.getIdToken()
           });
-          setCurrentUser(result.data);
+          setCurrentUser(result.data.user);
           console.log("result", result.data);
 
           if (result.data.token) {

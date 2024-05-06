@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TabList, TabPanel, Tabs, Tab } from 'react-tabs';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 const BuyAndSell = () => {
 
@@ -194,22 +194,3 @@ const BuyAndSell = () => {
 }
 
 export default BuyAndSell;
-
-{/* <div className="flex flex-col items-center md:w-1/2 w-full">
-                                <label className="particles-checkbox-container">
-                                    <input type="radio" className="particles-checkbox" name="toggle"/>
-                                        <span>Sliver</span>
-                                </label>
-
-                                <label className="particles-checkbox-container">
-                                    <input type="radio" className="particles-checkbox" name="toggle"/>
-                                        <span>Royla Blue</span>
-                                </label>
-
-                                <label className="particles-checkbox-container">
-                                    <input type="radio" className="particles-checkbox" name="toggle"/>
-                                        <span>Dark Gray</span>
-                                </label>
-
-                                <a href="https://codepen.io/chandrashekhar" className="link" target="_blank">My Other Pens</a>
-                            </div> */}
