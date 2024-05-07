@@ -1,24 +1,31 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
-import News from './pages/News/News';
-import Navbar from './common/navbar';
-import Crypto from './pages/Crypto/Crypto';
-import Profile from './pages/Profile/Profile';
-import BuyCrypto from './pages/BuyCrypto/BuyAndSellCrypto';
-
+import { useContext } from 'react';
+import { AuthContext } from '@context/authContext';
+import Navbar from 'common/navbar';
+import BuyCrypto from '@pages/BuyCrypto/BuyAndSellCrypto';
+import Home from '@pages/Home/Home';
+import Login from '@pages/Login/Login';
+import News from '@pages/News/News';
+import Profile from '@pages/Profile/Profile';
+import Crypto from '@pages/Crypto/Crypto';
 
 const AppRoutes = () => {
+  const { user } = useContext(AuthContext);
+  const isAuthenticated = !!user;
   return (
     <BrowserRouter>
-      <Navbar />
+      {isAuthenticated && <Navbar />}
       <Routes>
-        <Route Component={Home} path="/" />
-        <Route Component={Login} path="/login" />
-        <Route Component={News} path="/news" />
-        <Route Component={Crypto} path="/crypto" />
-        <Route Component={Profile} path="/profile" />
-        <Route Component={BuyCrypto} path="/buy-crypto" />
+        <Route element={<Login />} path="/login" />
+        {isAuthenticated && (
+          <>
+            <Route element={<Home />} path="/" />
+            <Route element={<News />} path="/news" />
+            <Route element={<Crypto />} path="/crypto" />
+            <Route element={<Profile />} path="/profile" />
+            <Route element={<BuyCrypto />} path="/buy-crypto" />
+          </>
+        )}
       </Routes>
     </BrowserRouter>
   );

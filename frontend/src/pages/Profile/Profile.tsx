@@ -9,12 +9,12 @@ const Profile = () => {
 
   const initialValues = {
     firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
+    lastName: user?.lastName || ''
   };
 
   const validationSchema = yup.object().shape({
     firstName: yup.string().required('Name is required'),
-    lastName: yup.string().required('Email is required'),
+    lastName: yup.string().required('Email is required')
   });
 
   const formik = useFormik({
@@ -42,7 +42,9 @@ const Profile = () => {
             className="rounded-full w-32 h-32 md:w-80 md:h-80"
           />
           <div className="mt-4">
-            <span className="text-2xl md:text-4xl">{user?.firstName + user?.lastName || ``}</span>
+            <span className="text-2xl md:text-4xl">
+              {user?.firstName} {user?.lastName}
+            </span>
           </div>
         </div>
         <div className="flex flex-col items-center justify-center md:w-1/2 w-full mt-8 md:mt-0">
