@@ -14,5 +14,8 @@ export default defineConfig({
   },
   build: {
     outDir: './build'
+  },
+  define: {
+    VITE_API_HOST: process.env.VITE_API_HOST,
   }
 })
