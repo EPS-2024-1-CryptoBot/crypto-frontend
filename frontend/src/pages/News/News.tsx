@@ -5,19 +5,19 @@ const News = () => {
     const [news, setNews] = useState([]);
 
 
-    const formatDate = (date: Date) => {
-        console.log(date);
-        // const year = date.getFullYear();
-        // const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        // const day = date.getDate().toString().padStart(2, '0');
-        // return `${year}-${day}-${month}`;
-        return "2024-05-05";
-    }
+    // const formatDate = (date: Date) => {
+    //     console.log(date);
+    //     const year = date.getFullYear();
+    //     const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    //     const day = date.getDate().toString().padStart(2, '0');
+    //     return `${year}-${day}-${month}`;
+    //     return "2024-05-05";
+    // }
     useEffect(() => {
         const fetchNews = async () => {
             try {
 
-                const currentDate = formatDate(new Date());  
+                // const currentDate = formatDate(new Date());  
                 // const url = `https://newsapi.org/v2/everything?q=crypto&from=${currentDate}&sortBy=publishedAt&apiKey=2121a18c88f8481693eed0703d3b4121`;
                 // const response = await fetch(url);
                 // const data = await response.json();
