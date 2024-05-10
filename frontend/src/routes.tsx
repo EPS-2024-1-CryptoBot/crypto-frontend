@@ -6,6 +6,7 @@ import Navbar from './common/navbar';
 import Crypto from './pages/Crypto/Crypto';
 import Profile from './pages/Profile/Profile';
 import BuyCrypto from './pages/BuyCrypto/BuyAndSellCrypto';
+import Wallet from './pages/Wallet/Wallet';
 
 
 const AppRoutes = () => {
@@ -19,6 +20,7 @@ const AppRoutes = () => {
         <Route Component={Crypto} path="/crypto" />
         <Route Component={Profile} path="/profile" />
         <Route Component={BuyCrypto} path="/buy-crypto" />
+        <Route Component={Wallet} path="/wallet" />
       </Routes>
     </BrowserRouter>
   );

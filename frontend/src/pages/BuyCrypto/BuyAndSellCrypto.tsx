@@ -19,21 +19,25 @@ const BuyCrypto = () => {
                     <Tab className="flex-grow flex-shrink m-2 nav-item text-center text-xl lg:text-3xl cursor-pointer">
                         <span className="nav-link">Saque</span>
                     </Tab>
+                    <Tab className="flex-grow flex-shrink m-2 nav-item text-center text-xl lg:text-3xl cursor-pointer">
+                        <span className="nav-link">Bot</span>
+                    </Tab>
                 </TabList>
-
 
                 <TabPanel>
                     <BuyAndSell />
                 </TabPanel>
 
                 <TabPanel>
-                {/* <div className="flex justify-center items-center h-full"> */}
                     <Deposit />
-                {/* </div> */}
                 </TabPanel>
 
                 <TabPanel>
                     <h1>Saque</h1>
+                </TabPanel>
+
+                <TabPanel>
+                    <h1>Bot</h1>
                 </TabPanel>
 
             </Tabs>
