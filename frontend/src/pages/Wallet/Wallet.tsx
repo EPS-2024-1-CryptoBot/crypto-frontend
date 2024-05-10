@@ -29,7 +29,7 @@ const BuyAndSell = () => {
         event.preventDefault();
         const quantity = (event.target as any).quantity.value;
         const payload = {
-            receiver: "CYTuNG8cBsS3wdohLbjFm3wkEO23",
+            receiver: destination,
             amount: quantity,
         };
         const res = await addTransaction(user?.uid, payload);
