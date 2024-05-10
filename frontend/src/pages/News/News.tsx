@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import arq from "./arq.json"
 
 const News = () => {
     const [news, setNews] = useState([]);
@@ -17,10 +18,11 @@ const News = () => {
             try {
 
                 const currentDate = formatDate(new Date());  
-                const url = `https://newsapi.org/v2/everything?q=crypto&from=${currentDate}&sortBy=publishedAt&apiKey=2121a18c88f8481693eed0703d3b4121`;
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log(data);
+                // const url = `https://newsapi.org/v2/everything?q=crypto&from=${currentDate}&sortBy=publishedAt&apiKey=2121a18c88f8481693eed0703d3b4121`;
+                // const response = await fetch(url);
+                // const data = await response.json();
+                const data = arq as any;
+                // console.log(data);
                 setNews(data.articles.filter((article: any) => article.urlToImage));
 
             } catch (error) {
