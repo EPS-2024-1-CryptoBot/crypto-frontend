@@ -45,7 +45,7 @@ const Navbar = () => {
 
     return (
         <nav className="bg-secondary p-4 flex justify-between items-center">
-            <div className="flex items-center">
+            <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
                 <img src={logo} alt="logo" className="w-8 h-8 rounded-full mr-2" />
                 <span className="text-white text-lg lg:text-xl">CryptoBot</span>
             </div>
@@ -105,7 +105,7 @@ const Navbar = () => {
                                 <Link to="/exchange" className="text-white hover:underline">Cotação</Link>
                             </li>
                             <li>
-                                <Link to="/crypto_bot" className="text-white hover:underline">Crypto Bot</Link>
+                                <Link to="/crypto-bot" className="text-white hover:underline">Crypto Bot</Link>
                             </li>
                             <li>
                                 <Link to="/traders" className="text-white hover:underline">Traders</Link>

@@ -7,6 +7,7 @@ import Crypto from './pages/Crypto/Crypto';
 import Profile from './pages/Profile/Profile';
 import BuyCrypto from './pages/BuyCrypto/BuyAndSellCrypto';
 import Wallet from './pages/Wallet/Wallet';
+import CryptoBot from './pages/CryptoBot/CryptoBot';
 
 
 const AppRoutes = () => {
@@ -21,6 +22,7 @@ const AppRoutes = () => {
         <Route Component={Profile} path="/profile" />
         <Route Component={BuyCrypto} path="/buy-crypto" />
         <Route Component={Wallet} path="/wallet" />
+        <Route Component={CryptoBot} path="/crypto-bot" />
       </Routes>
     </BrowserRouter>
   );
