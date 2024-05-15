@@ -5,7 +5,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
-  signInWithPopup,
+  signInWithPopup
 } from 'firebase/auth';
 import { createContext, useEffect, useState } from 'react';
 import { api } from '../config/api';
@@ -14,7 +14,12 @@ import { app } from '../config/firebase';
 interface AuthContextType {
   user: any;
   logout: () => Promise<void>;
-  signUpWithMailAndPassword: (email: string, password: string, firstName: string, lastName: string) => Promise<boolean>;
+  signUpWithMailAndPassword: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => Promise<boolean>;
   signInWithMailAndPassword: (email: string, password: string) => Promise<boolean>;
   signInWithGoogle: () => Promise<boolean>;
   setLoading: (loading: boolean) => void;
@@ -33,14 +38,13 @@ const AuthProvider = ({ children }: any) => {
     const auth = getAuth(app);
     const result = await signInWithEmailAndPassword(auth, email, password)
       .then(async (userCredential: UserCredential) => {
-        
         try {
           const result = await api.post('/auth/login', {
             email,
             token: await userCredential.user.getIdToken()
           });
           setCurrentUser(result.data.user);
-          console.log("result", result.data);
+          console.log('result', result.data);
 
           if (result.data.token) {
             localStorage.setItem('token', result.data.token);
@@ -60,7 +64,12 @@ const AuthProvider = ({ children }: any) => {
     return result;
   };
 
-  const signUpWithMailAndPassword = async (email: string, password: string, firstName: string, lastName: string) => {
+  const signUpWithMailAndPassword = async (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => {
     setLoading(true);
     const auth = getAuth(app);
     const result = await createUserWithEmailAndPassword(auth, email, password)
@@ -88,7 +97,6 @@ const AuthProvider = ({ children }: any) => {
         setLoading(false);
 
         return true;
-
       })
       .catch((error) => {
         setLoading(false);
@@ -127,6 +135,23 @@ const AuthProvider = ({ children }: any) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setCurrentUser(user);
       setLoading(false);
+      // Todo: extract this to a function
+      if (user) {
+        user.getIdToken().then(async (token) => {
+          try {
+            const result = await api.post('/auth/login', {
+              email: user.email,
+              token
+            });
+            setCurrentUser(result.data.user);
+            if (result.data.token) {
+              localStorage.setItem('token', result.data.token);
+            }
+          } catch (error) {
+            console.error(error);
+          }
+        });
+      }
     });
     return unsubscribe;
   }, []);
