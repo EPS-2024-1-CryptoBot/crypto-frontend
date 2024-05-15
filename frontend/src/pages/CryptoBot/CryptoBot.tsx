@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
@@ -23,7 +23,7 @@ const Crypto = () => {
         Tooltip,
         Legend
     );
-    const [wallet, setWallet] = useState(2100.10);
+    const [wallet] = useState(2100.10);
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     const options = {
         responsive: true,
