@@ -132,25 +132,22 @@ const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     const auth = getAuth(app);
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setCurrentUser(user);
       setLoading(false);
-      // Todo: extract this to a function
-      if (user) {
-        user.getIdToken().then(async (token) => {
-          try {
-            const result = await api.post('/auth/login', {
-              email: user.email,
-              token
-            });
-            setCurrentUser(result.data.user);
-            if (result.data.token) {
-              localStorage.setItem('token', result.data.token);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        });
+
+      const tokenFromStorage = localStorage.getItem('token');
+
+      if (user && tokenFromStorage) {
+        try {
+          const result = await api.post('/auth/login', {
+            email: user.email,
+            token: (await user.getIdToken())
+          });
+          setCurrentUser(result.data.user);
+        } catch (error) {
+          console.error(error);
+        }
       }
     });
     return unsubscribe;
