@@ -112,7 +112,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/extract" className="text-white hover:underline">
+                <Link to="/statement" className="text-white hover:underline">
                   Extrato
                 </Link>
               </li>
