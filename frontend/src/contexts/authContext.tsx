@@ -28,6 +28,10 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
+const saveToken = (token: string) => {
+  localStorage.setItem('token', token);
+}
+
 const AuthProvider = ({ children }: any) => {
   const [currentUser, setCurrentUser] = useState<User | null>();
   const [loading, setLoading] = useState(false);
@@ -89,7 +93,7 @@ const AuthProvider = ({ children }: any) => {
           setCurrentUser(user);
 
           if (result.data.token) {
-            localStorage.setItem('token', result.data.token);
+            saveToken(result.data.token); 
           }
         } catch (error) {
           console.error(error);
@@ -145,6 +149,10 @@ const AuthProvider = ({ children }: any) => {
             token: (await user.getIdToken())
           });
           setCurrentUser(result.data.user);
+
+          if (result.data.token) {
+            saveToken(result.data.token); 
+          }
         } catch (error) {
           console.error(error);
         }
