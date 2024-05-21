@@ -112,7 +112,7 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/statement" className="text-white hover:underline">
+                <Link to="/extract" className="text-white hover:underline">
                   Extrato
                 </Link>
               </li>
@@ -124,6 +124,11 @@ const Navbar = () => {
               <li>
                 <Link to="/crypto-bot" className="text-white hover:underline">
                   Crypto Bot
+                </Link>
+              </li>
+              <li>
+                <Link to="/statement" className="text-white hover:underline">
+                  Minerar
                 </Link>
               </li>
               <li>
