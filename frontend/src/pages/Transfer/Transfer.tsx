@@ -3,7 +3,7 @@ import { TabList, TabPanel, Tabs, Tab } from 'react-tabs';
 import { addTransaction } from './routes';
 import { AuthContext } from '../../contexts/authContext';
 
-const BuyAndSell = () => {
+const Transfer = () => {
     const { user } = useContext(AuthContext);
     console.log('user', user);
     const [destination, setDestination] = useState(null);
@@ -122,4 +122,4 @@ const BuyAndSell = () => {
     )
 }
 
-export default BuyAndSell;
+export default Transfer;
