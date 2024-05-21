@@ -107,7 +107,7 @@ const Navbar = () => {
           {user && (
             <>
               <li>
-                <Link to="/wallet" className="text-white hover:underline">
+                <Link to="/buy-crypto" className="text-white hover:underline">
                   Carteira
                 </Link>
               </li>
