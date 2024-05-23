@@ -46,6 +46,7 @@ const Transfer = () => {
 
     try {
       const res = await addTransaction(user?.uid, payload);
+      console.log(res);
       setMessage('Transfer successful!');
     } catch (error) {
       setMessage('Transfer failed.');
