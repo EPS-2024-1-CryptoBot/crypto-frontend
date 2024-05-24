@@ -50,12 +50,13 @@ const Extract = () => {
       }
     }
   };
+  const val = Math.random() * 1000;
   const data = {
     labels,
     datasets: [
       {
         label: 'Saldo',
-        data: labels.map(() => Math.random() * 1000),
+        data: labels.map(() => val),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)'
       }
