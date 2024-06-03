@@ -1,7 +1,7 @@
 import { api } from '../../config/api';
 
-export async function addApiKeyBinanceToUser(user: any) {
-  const response = await api.post(`/consultant/binance_api_key/${user.firebaseUid}`, user);
+export async function addApiKeyBinanceToUser(user: any, apiKey: any){
+  const response = await api.post(`/consultant/binance_api_key/${user.firebaseUid}/${apiKey}`, user);
   return response.data;
 }
 
