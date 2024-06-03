@@ -5,12 +5,12 @@ const Trade = () => {
         <input
           type="text"
           placeholder="Binance"
-          className="mr-2 p-2 border border-gray-300 rounded"
+          className="mr-2 p-2 border border-gray-300 rounded text-black"
         />
         <input
           type="text"
           placeholder="Bitmex"
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 rounded text-black"
         />
       </div>
       <div className="overflow-auto h-full">
