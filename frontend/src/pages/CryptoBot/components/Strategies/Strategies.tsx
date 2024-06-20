@@ -76,29 +76,33 @@ const Strategies: React.FC = () => {
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
             placeholder="RSI Periods"
-            value={strategy.rsiPeriods || ''}
+            value={strategy.rsiPeriods ?? ''}
             onChange={(e) => handleInputChange(index, 'rsiPeriods', e.target.value)}
+            disabled={strategy.isActive}
           />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
             placeholder="MACD Fast Length"
-            value={strategy.macdFastLength || ''}
+            value={strategy.macdFastLength ?? ''}
             onChange={(e) => handleInputChange(index, 'macdFastLength', e.target.value)}
+            disabled={strategy.isActive}
           />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
             placeholder="MACD Slow Length"
-            value={strategy.macdSlowLength || ''}
+            value={strategy.macdSlowLength ?? ''}
             onChange={(e) => handleInputChange(index, 'macdSlowLength', e.target.value)}
+            disabled={strategy.isActive}
           />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
             placeholder="MACD Signal Length"
-            value={strategy.macdSignalLength || ''}
+            value={strategy.macdSignalLength ?? ''}
             onChange={(e) => handleInputChange(index, 'macdSignalLength', e.target.value)}
+            disabled={strategy.isActive}
           />
         </div>
       );
@@ -110,8 +114,9 @@ const Strategies: React.FC = () => {
           type="text"
           className="p-2 border border-gray-300 rounded text-black w-24"
           placeholder="Minimum Volume"
-          value={strategy.minimumVolume || ''}
+          value={strategy.minimumVolume ?? ''}
           onChange={(e) => handleInputChange(index, 'minimumVolume', e.target.value)}
+          disabled={strategy.isActive}
         />
       );
     }
@@ -123,13 +128,16 @@ const Strategies: React.FC = () => {
     return strategies.map((strategy, index) => (
       <tr key={index}>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <SelectStrategy onSelect={(strategyType) => handleStrategySelect(index, strategyType)} />
+          <SelectStrategy
+            onSelect={(strategyType) => handleStrategySelect(index, strategyType)}
+            disabled={strategy.isActive}
+          />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <SelectContract />
+          <SelectContract disabled={strategy.isActive} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <SelectTimeframe />
+          <SelectTimeframe disabled={strategy.isActive} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <input
@@ -138,6 +146,7 @@ const Strategies: React.FC = () => {
             placeholder="Balance %"
             value={strategy.balance}
             onChange={(e) => handleInputChange(index, 'balance', e.target.value)}
+            disabled={strategy.isActive}
           />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
@@ -147,6 +156,7 @@ const Strategies: React.FC = () => {
             placeholder="TP %"
             value={strategy.tp}
             onChange={(e) => handleInputChange(index, 'tp', e.target.value)}
+            disabled={strategy.isActive}
           />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
@@ -156,6 +166,7 @@ const Strategies: React.FC = () => {
             placeholder="SL %"
             value={strategy.sl}
             onChange={(e) => handleInputChange(index, 'sl', e.target.value)}
+            disabled={strategy.isActive}
           />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
@@ -170,7 +181,11 @@ const Strategies: React.FC = () => {
           </button>
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <button className="p-3 bg-secondary border rounded" onClick={() => removeStrategy(index)}>
+          <button 
+            className={`p-3 bg-secondary border rounded ${strategy.isActive ? 'cursor-not-allowed opacity-50' : ''}`} 
+            onClick={() => !strategy.isActive && removeStrategy(index)} 
+            disabled={strategy.isActive}
+          >
             <MdClose />
           </button>
         </td>

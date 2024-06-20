@@ -5,14 +5,17 @@ const strategies = ['Technical', 'Breakout'];
 
 interface SelectStrategyProps {
   onSelect: (strategy: string) => void;
+  disabled?: boolean;
 }
 
-const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect }) => {
+const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Strategy');
 
   const toggleActive = () => {
-    setIsActive(!isActive);
+    if (!disabled) {
+      setIsActive(!isActive);
+    }
   };
 
   const handleSelect = (strategy: string) => {
@@ -24,7 +27,7 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect }) => {
   return (
     <div className="relative mt-2">
       <div
-        className="border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center"
+        className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}
       >
         <span>{selected}</span>
@@ -34,7 +37,7 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect }) => {
           <FaChevronDown className="w-5 h-5" />
         )}
       </div>
-      {isActive && (
+      {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {strategies.length ? (

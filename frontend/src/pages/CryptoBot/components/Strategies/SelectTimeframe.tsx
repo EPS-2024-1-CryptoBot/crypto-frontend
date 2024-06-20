@@ -3,12 +3,18 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const timeframes = ['1m', '5m', '15m', '30m', '1h', '4h'];
 
-const SelectTimeframe: React.FC = () => {
+interface SelectTimeframeProps {
+  disabled?: boolean;
+}
+
+const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Timeframe');
 
   const toggleActive = () => {
-    setIsActive(!isActive);
+    if (!disabled) {
+      setIsActive(!isActive);
+    }
   };
 
   const handleSelect = (timeframe: string) => {
@@ -19,7 +25,7 @@ const SelectTimeframe: React.FC = () => {
   return (
     <div className="relative mt-2">
       <div
-        className="border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center"
+        className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}
       >
         <span>{selected}</span>
@@ -29,7 +35,7 @@ const SelectTimeframe: React.FC = () => {
           <FaChevronDown className="w-5 h-5" />
         )}
       </div>
-      {isActive && (
+      {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {timeframes.length ? (

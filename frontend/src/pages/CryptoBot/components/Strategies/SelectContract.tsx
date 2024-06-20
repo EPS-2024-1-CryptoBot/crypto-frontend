@@ -14,13 +14,19 @@ const cryptocurrencies = [
   'Solana'
 ];
 
-const SelectContract: React.FC = () => {
+interface SelectContractProps {
+  disabled?: boolean;
+}
+
+const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Contract');
   const [filter, setFilter] = useState('');
 
   const toggleActive = () => {
-    setIsActive(!isActive);
+    if (!disabled) {
+      setIsActive(!isActive);
+    }
   };
 
   const handleSelect = (crypto: string) => {
@@ -36,7 +42,7 @@ const SelectContract: React.FC = () => {
   return (
     <div className="relative mt-2">
       <div
-        className="border border-gray-400 p-2 w-52 rounded cursor-pointer flex justify-between items-center"
+        className={`border border-gray-400 p-2 w-52 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}
       >
         <span>{selected}</span>
@@ -46,7 +52,7 @@ const SelectContract: React.FC = () => {
           <FaChevronDown className="w-5 h-5" />
         )}
       </div>
-      {isActive && (
+      {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <input
             type="text"
