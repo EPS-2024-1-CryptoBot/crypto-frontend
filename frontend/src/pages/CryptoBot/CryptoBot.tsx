@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/authContext';
-import Logging from "./components/Logging";
-import Strategies from "./components/Strategies";
-import Trade from "./components/Trade";
-import Watchlist from "./components/Watchlist";
+import Logging from './components/Logging/Logging';
+import Strategies from "./components/Strategies/Strategies";
+import Trade from './components/Trade/Trade';
+import Watchlist from './components/Watchlist/Watchlist';
 import { addApiKeyBinanceToUser, decryptApiKeyBinance } from './routes';
 
 const CryptoBot = () => {
@@ -49,17 +49,17 @@ const CryptoBot = () => {
       >
         PEGAR CHAVE
       </button> */}
-      <div className="w-full h-[90vh] bg-gray-900 text-white flex flex-wrap p-4 mt-4 mx-auto ">
-        <div className="w-[40%] h-[50%] bg-red-500 flex items-center justify-center">
+      <div className="w-full h-[90vh] bg-gray-900 text-white flex flex-wrap p-4 mt-4 mx-auto">
+        <div className="w-[40%] h-[50%] flex items-center justify-center p-4">
           <Trade />
         </div>
-        <div className="w-[60%] h-[50%] bg-blue-500 flex items-center justify-center">
+        <div className="w-[60%] h-[50%] flex items-center justify-center p-4">
           <Strategies />
         </div>
-        <div className="w-[40%] h-[50%] bg-green-500 flex items-center justify-center">
+        <div className="w-[40%] h-[50%] bg-green-500 flex items-center justify-center p-4">
           <Logging />
         </div>
-        <div className="w-[60%] h-[50%] bg-yellow-500 flex items-center justify-center">
+        <div className="w-[60%] h-[50%] flex items-center justify-center p-4">
           <Watchlist />
         </div>
       </div>
