@@ -49,18 +49,20 @@ const CryptoBot = () => {
       >
         PEGAR CHAVE
       </button> */}
-      <div className="w-full h-[90vh] bg-gray-900 text-white flex flex-wrap p-4 mt-4 mx-auto">
-        <div className="w-[40%] h-[50%] flex items-center justify-center p-4">
-          <Trade />
-        </div>
-        <div className="w-[60%] h-[50%] flex items-center justify-center p-4">
-          <Strategies />
-        </div>
-        <div className="w-[40%] h-[50%] bg-green-500 flex items-center justify-center p-4">
-          <Logging />
-        </div>
-        <div className="w-[60%] h-[50%] flex items-center justify-center p-4">
-          <Watchlist />
+      <div className="w-full h-screen bg-gray-900 text-white p-4">
+        <div className="w-full h-[90vh] flex flex-wrap">
+          <div className="w-[40%] h-[50%] p-4">
+            <Trade />
+          </div>
+          <div className="w-[60%] h-[50%] p-4 overflow-auto">
+            <Strategies />
+          </div>
+          <div className="w-[40%] h-[50%] bg-green-500 p-4 overflow-auto">
+            <Logging />
+          </div>
+          <div className="w-[60%] h-[50%] p-4 overflow-auto">
+            <Watchlist />
+          </div>
         </div>
       </div>
 

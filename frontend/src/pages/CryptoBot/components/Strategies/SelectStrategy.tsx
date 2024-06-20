@@ -3,7 +3,11 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 const strategies = ['Technical', 'Breakout'];
 
-const SelectStrategy: React.FC = () => {
+interface SelectStrategyProps {
+  onSelect: (strategy: string) => void;
+}
+
+const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Strategy');
 
@@ -13,11 +17,12 @@ const SelectStrategy: React.FC = () => {
 
   const handleSelect = (strategy: string) => {
     setSelected(strategy);
+    onSelect(strategy); // Notify parent component of the selected strategy
     setIsActive(false);
   };
 
   return (
-    <div className="relative mt-5">
+    <div className="relative mt-2">
       <div
         className="border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center"
         onClick={toggleActive}

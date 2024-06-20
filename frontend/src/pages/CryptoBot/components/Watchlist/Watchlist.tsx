@@ -1,7 +1,7 @@
 const Watchlist = () => {
   return (
     <div className="text-center w-full h-full">
-      <div className="overflow-auto h-full">
+      <div className="overflow-auto">
         <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
           <thead>
             <tr>

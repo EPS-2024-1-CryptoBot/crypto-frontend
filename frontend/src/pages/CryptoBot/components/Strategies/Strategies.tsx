@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MdClose } from 'react-icons/md';
 import SelectContract from './SelectContract';
 import SelectStrategy from './SelectStrategy';
 import SelectTimeframe from './SelectTimeframe';
@@ -11,6 +12,11 @@ interface Strategy {
   tp: string;
   sl: string;
   isActive: boolean;
+  rsiPeriods?: string;
+  macdFastLength?: string;
+  macdSlowLength?: string;
+  macdSignalLength?: string;
+  minimumVolume?: string;
 }
 
 const Strategies: React.FC = () => {
@@ -54,65 +60,149 @@ const Strategies: React.FC = () => {
     setStrategies(updatedStrategies);
   };
 
+  const handleStrategySelect = (index: number, strategyType: string) => {
+    setStrategies(
+      strategies.map((strategy, i) =>
+        i === index ? { ...strategy, strategyType } : strategy
+      )
+    );
+  };
+
+  const renderAdditionalInputs = (strategy: Strategy, index: number) => {
+    if (strategy.strategyType === 'Technical') {
+      return (
+        <div className="flex space-x-2">
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="RSI Periods"
+            value={strategy.rsiPeriods || ''}
+            onChange={(e) => handleInputChange(index, 'rsiPeriods', e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="MACD Fast Length"
+            value={strategy.macdFastLength || ''}
+            onChange={(e) => handleInputChange(index, 'macdFastLength', e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="MACD Slow Length"
+            value={strategy.macdSlowLength || ''}
+            onChange={(e) => handleInputChange(index, 'macdSlowLength', e.target.value)}
+          />
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="MACD Signal Length"
+            value={strategy.macdSignalLength || ''}
+            onChange={(e) => handleInputChange(index, 'macdSignalLength', e.target.value)}
+          />
+        </div>
+      );
+    }
+
+    if (strategy.strategyType === 'Breakout') {
+      return (
+        <input
+          type="text"
+          className="p-2 border border-gray-300 rounded text-black w-24"
+          placeholder="Minimum Volume"
+          value={strategy.minimumVolume || ''}
+          onChange={(e) => handleInputChange(index, 'minimumVolume', e.target.value)}
+        />
+      );
+    }
+
+    return null;
+  };
+
   const renderStrategies = () => {
     return strategies.map((strategy, index) => (
-      <div key={index} className="flex items-center space-x-2 mb-2">
-        <SelectStrategy/>
-
-        <SelectContract/>
-
-        <SelectTimeframe/>
-
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded text-black w-16"
-          placeholder="Balance %"
-          value={strategy.balance}
-          onChange={(e) =>
-            handleInputChange(index, 'balance', e.target.value)
-          }
-        />
-
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded text-black w-16"
-          placeholder="TP %"
-          value={strategy.tp}
-          onChange={(e) =>
-            handleInputChange(index, 'tp', e.target.value)
-          }
-        />
-
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded text-black w-16"
-          placeholder="SL %"
-          value={strategy.sl}
-          onChange={(e) =>
-            handleInputChange(index, 'sl', e.target.value)
-          }
-        />
-
-        <button
-          className={`p-1 border rounded ${strategy.isActive ? 'bg-green-500' : 'bg-red-500'}`}
-          onClick={() => toggleActive(index)}
-        >
-          {strategy.isActive ? 'ON' : 'OFF'}
-        </button>
-
-        <button className="p-1 border bg-gray-300 rounded" onClick={() => removeStrategy(index)}>
-          X
-        </button>
-      </div>
+      <tr key={index}>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <SelectStrategy onSelect={(strategyType) => handleStrategySelect(index, strategyType)} />
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <SelectContract />
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <SelectTimeframe />
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="Balance %"
+            value={strategy.balance}
+            onChange={(e) => handleInputChange(index, 'balance', e.target.value)}
+          />
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-16"
+            placeholder="TP %"
+            value={strategy.tp}
+            onChange={(e) => handleInputChange(index, 'tp', e.target.value)}
+          />
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-16"
+            placeholder="SL %"
+            value={strategy.sl}
+            onChange={(e) => handleInputChange(index, 'sl', e.target.value)}
+          />
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          {renderAdditionalInputs(strategy, index)}
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <button
+            className={`p-2 border rounded ${strategy.isActive ? 'bg-green-500' : 'bg-red-500'}`}
+            onClick={() => toggleActive(index)}
+          >
+            {strategy.isActive ? 'ON' : 'OFF'}
+          </button>
+        </td>
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+          <button className="p-3 bg-secondary border rounded" onClick={() => removeStrategy(index)}>
+            <MdClose />
+          </button>
+        </td>
+      </tr>
     ));
   };
 
   return (
-    <div className="text-center">
+    <div className="text-center w-full h-full overflow-auto">
       <button className="my-4 p-2 bg-secondary text-white rounded" onClick={addStrategy}>
         Add Strategy
       </button>
-      <div className="space-y-2">{renderStrategies()}</div>
+      <div className="overflow-auto max-h-full">
+        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
+          <thead>
+            <tr>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Strategy Type</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Contract</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Timeframe</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Balance %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">TP %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">SL %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parameters</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderStrategies()}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

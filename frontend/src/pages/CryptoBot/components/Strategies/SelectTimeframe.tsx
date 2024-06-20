@@ -17,9 +17,9 @@ const SelectTimeframe: React.FC = () => {
   };
 
   return (
-    <div className="relative mt-5">
+    <div className="relative mt-2">
       <div
-        className="border border-gray-400 p-2 w-24 rounded cursor-pointer flex justify-between items-center"
+        className="border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center"
         onClick={toggleActive}
       >
         <span>{selected}</span>
