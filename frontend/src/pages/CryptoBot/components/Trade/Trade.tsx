@@ -1,3 +1,5 @@
+import { api } from "../../../../config/api";
+
 const rows = [
   { symbol: 'BTC/USD', exchange: 'Binance', bid: '45000', ask: '45100' },
   { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
@@ -48,6 +50,20 @@ const rows = [
 ];
 
 const Trade = () => {
+  const getContracts = async () => {
+    let contracts = [];
+    try {
+      const res = await api.get('/consultant/contract_list');
+      console.log(res.data);
+      contracts = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return contracts;
+  };
+
+  
   return (
     <div className="text-center w-full h-full mt-4 bg-gray-900">
       <div className="mb-4">
@@ -61,6 +77,7 @@ const Trade = () => {
           placeholder="Bitmex"
           className="p-2 border border-gray-300 rounded text-black"
         />
+        <button className="p-2 bg-blue-500 text-white rounded" onClick={getContracts}>Search</button>
       </div>
       <div className="overflow-auto h-full">
         <div className="min-w-full bg-gray-800 shadow-md">
