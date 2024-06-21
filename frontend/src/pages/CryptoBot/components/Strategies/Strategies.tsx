@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { MdClose } from 'react-icons/md';
+import { Tooltip } from 'react-tooltip';
+import { formatInputValue } from '../../../../utils/utils';
 import SelectContract from './SelectContract';
 import SelectStrategy from './SelectStrategy';
 import SelectTimeframe from './SelectTimeframe';
+
 
 interface Strategy {
   strategyType: string;
@@ -50,10 +53,7 @@ const Strategies: React.FC = () => {
   };
 
   const handleInputChange = (index: number, field: keyof Strategy, value: string) => {
-    const sanitizedValue = value.replace(/[^0-9.]/g, '');
-    const numericValue = parseFloat(sanitizedValue);
-    const boundedValue = numericValue > 100 ? '100' : numericValue < 0 ? '0' : sanitizedValue;
-
+    const boundedValue = formatInputValue(value);
     const updatedStrategies = strategies.map((strategy, i) =>
       i === index ? { ...strategy, [field]: boundedValue } : strategy
     );
@@ -79,7 +79,11 @@ const Strategies: React.FC = () => {
             value={strategy.rsiPeriods ?? ''}
             onChange={(e) => handleInputChange(index, 'rsiPeriods', e.target.value)}
             disabled={strategy.isActive}
+            data-tooltip-id='rsi-tooltip'
+            data-tooltip-content="Relative Strength Index (RSI) Periods"
+            data-tooltip-place='top'
           />
+          <Tooltip id="rsi-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
@@ -87,7 +91,11 @@ const Strategies: React.FC = () => {
             value={strategy.macdFastLength ?? ''}
             onChange={(e) => handleInputChange(index, 'macdFastLength', e.target.value)}
             disabled={strategy.isActive}
+            data-tooltip-id='macdfast-tooltip'
+            data-tooltip-content="MACD Fast Length"
+            data-tooltip-place='top'
           />
+          <Tooltip id="macdfast-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
@@ -95,7 +103,11 @@ const Strategies: React.FC = () => {
             value={strategy.macdSlowLength ?? ''}
             onChange={(e) => handleInputChange(index, 'macdSlowLength', e.target.value)}
             disabled={strategy.isActive}
+            data-tooltip-id='macdslow-tooltip'
+            data-tooltip-content="MACD Slow Length"
+            data-tooltip-place='top'
           />
+          <Tooltip id="macdslow-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
@@ -103,21 +115,31 @@ const Strategies: React.FC = () => {
             value={strategy.macdSignalLength ?? ''}
             onChange={(e) => handleInputChange(index, 'macdSignalLength', e.target.value)}
             disabled={strategy.isActive}
+            data-tooltip-id='macdsignal-tooltip'
+            data-tooltip-content="MACD Signal Length"
+            data-tooltip-place='top'
           />
+          <Tooltip id="macdsignal-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </div>
       );
     }
 
     if (strategy.strategyType === 'Breakout') {
       return (
-        <input
-          type="text"
-          className="p-2 border border-gray-300 rounded text-black w-24"
-          placeholder="Minimum Volume"
-          value={strategy.minimumVolume ?? ''}
-          onChange={(e) => handleInputChange(index, 'minimumVolume', e.target.value)}
-          disabled={strategy.isActive}
-        />
+        <>
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="Minimum Volume"
+            value={strategy.minimumVolume ?? ''}
+            onChange={(e) => handleInputChange(index, 'minimumVolume', e.target.value)}
+            disabled={strategy.isActive}
+            data-tooltip-id='mv-tooltip'
+            data-tooltip-content="Minimum Volume required for breakout"
+            data-tooltip-place='top'
+          />
+          <Tooltip id="mv-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
+        </>
       );
     }
 
@@ -127,7 +149,7 @@ const Strategies: React.FC = () => {
   const renderStrategies = () => {
     return strategies.map((strategy, index) => (
       <tr key={index}>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 ">
           <SelectStrategy
             onSelect={(strategyType) => handleStrategySelect(index, strategyType)}
             disabled={strategy.isActive}
