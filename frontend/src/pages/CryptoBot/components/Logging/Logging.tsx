@@ -36,7 +36,7 @@ const logs = [
 
 const Logging = () => {
   return (
-    <div className="p-4 rounded-lg shadow-md">
+    <div className="p-4 rounded-lg shadow-md bg-gray-900">
       <h2 className="text-xl font-bold text-center mb-4">Logs</h2>
       <div className="space-y-2">
         {logs.map((log, index) => (

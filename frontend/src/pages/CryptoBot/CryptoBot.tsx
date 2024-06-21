@@ -49,7 +49,6 @@ const CryptoBot = () => {
       // if(res.api_token_binance !== null) {
       //   alert('Chave criada com sucesso!');
       // }
-      
     } catch (error) {
       alert(JSON.stringify(error));
     }
@@ -57,18 +56,6 @@ const CryptoBot = () => {
 
   return (
     <div>
-      {/* <button 
-        onClick={salvarChave} 
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-4"
-      >
-        GERAR CHAVE
-      </button>
-      <button 
-        onClick={pegarChave} 
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
-      >
-        PEGAR CHAVE
-      </button> */}
       <div className="w-full h-screen bg-gray-900 text-white">
         <div className="w-full h-[90vh] flex flex-wrap border-2 border-gray-600">
           <div className="w-[40%] h-[50%] border-2 border-gray-600">

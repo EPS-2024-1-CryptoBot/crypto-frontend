@@ -76,10 +76,10 @@ const Strategies: React.FC = () => {
   const renderAdditionalInputs = (strategy: Strategy, index: number) => {
     if (strategy.strategyType === 'Technical') {
       return (
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 bg-gray-900">
           <input
             type="text"
-            className="p-2 border border-gray-300 rounded text-black w-24"
+            className="p "
             placeholder="RSI Periods"
             value={strategy.rsiPeriods ?? ''}
             onChange={(e) => handleInputChange(index, 'rsiPeriods', e.target.value)}
@@ -154,19 +154,19 @@ const Strategies: React.FC = () => {
   const renderStrategies = () => {
     return strategies.map((strategy, index) => (
       <tr key={index}>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 ">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <SelectStrategy
             onSelect={(strategyType) => handleStrategySelect(index, strategyType)}
             disabled={strategy.isActive}
           />
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <SelectContract disabled={strategy.isActive} />
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <SelectTimeframe disabled={strategy.isActive} />
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
@@ -181,7 +181,7 @@ const Strategies: React.FC = () => {
           />
           <Tooltip id="balance-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-16"
@@ -196,7 +196,7 @@ const Strategies: React.FC = () => {
           />
           <Tooltip id="tp-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-16"
@@ -211,10 +211,10 @@ const Strategies: React.FC = () => {
           />
           <Tooltip id="sl-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           {renderAdditionalInputs(strategy, index)}
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <button
             className={`p-2 border rounded ${strategy.isActive ? 'bg-green-500' : 'bg-red-500'}`}
             onClick={() => toggleActive(index)}
@@ -222,7 +222,7 @@ const Strategies: React.FC = () => {
             {strategy.isActive ? 'ON' : 'OFF'}
           </button>
         </td>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 bg-gray-900">
           <button 
             className={`p-3 bg-secondary border rounded ${strategy.isActive ? 'cursor-not-allowed opacity-50' : ''}`} 
             onClick={() => !strategy.isActive && removeStrategy(index)} 
@@ -255,18 +255,18 @@ const Strategies: React.FC = () => {
         Add Strategy
       </button>
       <div className="overflow-auto max-h-full">
-        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
+        <table className="min-w-full bg-gray-800 dark:bg-gray-800 shadow-md">
           <thead>
             <tr>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Strategy Type</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Contract</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Timeframe</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Balance %</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">TP %</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">SL %</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parameters</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">Strategy Type</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">Contract</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">Timeframe</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">Balance %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">TP %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">SL %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">Parameters</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900"></th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900"></th>
             </tr>
           </thead>
           <tbody>
