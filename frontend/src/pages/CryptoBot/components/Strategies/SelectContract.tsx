@@ -41,7 +41,7 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
 
   return (
     <div className="relative mt-2">
-      <div
+      <button
         className={`border border-gray-400 p-2 w-52 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}
       >
@@ -51,12 +51,12 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
         ) : (
           <FaChevronDown className="w-5 h-5" />
         )}
-      </div>
+      </button>
       {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <input
             type="text"
-            className="p-1 w-full mb-2 outline-none text-sm placeholder-gray-600"
+            className="p-1 w-full mb-2 outline-none text-sm placeholder-gray-600 text-gray-600"
             placeholder="Pesquisar..."
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
@@ -65,7 +65,7 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {filteredCryptos.length ? (
               filteredCryptos.map((crypto) => (
-                <li
+                <option
                   key={crypto}
                   className={`cursor-pointer p-1 rounded ${
                     crypto === selected ? 'bg-gray-200' : ''
@@ -73,7 +73,7 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
                   onClick={() => handleSelect(crypto)}
                 >
                   {crypto}
-                </li>
+                </option>
               ))
             ) : (
               <li className="p-1">Nenhum item encontrado</li>

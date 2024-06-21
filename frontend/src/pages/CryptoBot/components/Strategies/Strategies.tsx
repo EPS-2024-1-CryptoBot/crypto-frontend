@@ -24,20 +24,25 @@ interface Strategy {
 
 const Strategies: React.FC = () => {
   const [strategies, setStrategies] = useState<Strategy[]>([]);
+  const [showLimitModal, setShowLimitModal] = useState(false);
 
   const addStrategy = () => {
-    setStrategies([
-      ...strategies,
-      {
-        strategyType: '',
-        contract: '',
-        timeframe: '',
-        balance: '',
-        tp: '',
-        sl: '',
-        isActive: false,
-      },
-    ]);
+    if (strategies.length < 3) {
+      setStrategies([
+        ...strategies,
+        {
+          strategyType: '',
+          contract: '',
+          timeframe: '',
+          balance: '',
+          tp: '',
+          sl: '',
+          isActive: false,
+        },
+      ]);
+    } else {
+      setShowLimitModal(true);
+    }
   };
 
   const removeStrategy = (index: number) => {
@@ -169,7 +174,12 @@ const Strategies: React.FC = () => {
             value={strategy.balance}
             onChange={(e) => handleInputChange(index, 'balance', e.target.value)}
             disabled={strategy.isActive}
+            maxLength={5}
+            data-tooltip-id='balance-tooltip'
+            data-tooltip-content="% of your Balance"
+            data-tooltip-place='top'
           />
+          <Tooltip id="balance-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <input
@@ -179,7 +189,12 @@ const Strategies: React.FC = () => {
             value={strategy.tp}
             onChange={(e) => handleInputChange(index, 'tp', e.target.value)}
             disabled={strategy.isActive}
+            maxLength={5}
+            data-tooltip-id='tp-tooltip'
+            data-tooltip-content="Take Profit %"
+            data-tooltip-place='top'
           />
+          <Tooltip id="tp-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <input
@@ -189,7 +204,12 @@ const Strategies: React.FC = () => {
             value={strategy.sl}
             onChange={(e) => handleInputChange(index, 'sl', e.target.value)}
             disabled={strategy.isActive}
+            maxLength={5}
+            data-tooltip-id='sl-tooltip'
+            data-tooltip-content="Stop Loss %"
+            data-tooltip-place='top'
           />
+          <Tooltip id="sl-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           {renderAdditionalInputs(strategy, index)}
@@ -217,6 +237,20 @@ const Strategies: React.FC = () => {
 
   return (
     <div className="text-center w-full h-full overflow-auto">
+      {showLimitModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            <p className="text-lg text-secondary font-bold">Upgrade to Premium</p>
+            <p className="text-sm text-secondary">Upgrade to a premium plan to add more than 3 strategies.</p>
+            <button
+              className="mt-2 px-4 py-2 bg-secondary text-white rounded"
+              onClick={() => setShowLimitModal(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <button className="my-4 p-2 bg-secondary text-white rounded" onClick={addStrategy}>
         Add Strategy
       </button>

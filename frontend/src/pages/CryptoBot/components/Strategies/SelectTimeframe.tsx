@@ -24,7 +24,7 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
 
   return (
     <div className="relative mt-2">
-      <div
+      <button
         className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}
       >
@@ -34,13 +34,13 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
         ) : (
           <FaChevronDown className="w-5 h-5" />
         )}
-      </div>
+      </button>
       {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {timeframes.length ? (
               timeframes.map((timeframe) => (
-                <li
+                <option
                   key={timeframe}
                   className={`cursor-pointer p-1 rounded ${
                     timeframe === selected ? 'bg-gray-200' : ''
@@ -48,7 +48,7 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
                   onClick={() => handleSelect(timeframe)}
                 >
                   {timeframe}
-                </li>
+                </option>
               ))
             ) : (
               <li className="p-1">Nenhum item encontrado</li>
