@@ -24,6 +24,7 @@ interface AuthContextType {
   signInWithGoogle: () => Promise<boolean>;
   setLoading: (loading: boolean) => void;
   loading: boolean;
+  setCurrentUser: (user: User | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -170,6 +171,7 @@ const AuthProvider = ({ children }: any) => {
         signInWithMailAndPassword,
         signInWithGoogle,
         setLoading,
+        setCurrentUser,
         loading
       }}>
       {!loading && children}

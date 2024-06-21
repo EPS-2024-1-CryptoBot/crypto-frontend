@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 import Logging from './components/Logging/Logging';
 import Strategies from './components/Strategies/Strategies';
@@ -7,23 +7,43 @@ import Watchlist from './components/Watchlist/Watchlist';
 import { addApiKeyBinanceToUser, decryptApiKeyBinance } from './routes';
 
 const CryptoBot = () => {
-  const { user } = useContext(AuthContext);
+  const { user, setCurrentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [apiKey, setApiKey] = useState('');
+  const [apiKeyResponse, setApiKeyResponse] = useState('');
+
+  useEffect(() => {
+    console.log('user no useEffect', user);
+    if (user && user.api_token_binance) {
+      setApiKey(user.api_token_binance);
+      setApiKeyResponse(user.api_token_binance);
+    } else {
+      setApiKey('');
+      setApiKeyResponse('');
+    }
+    setLoading(false);
+  }, [user]);
 
   const salvarChave = async () => {
     try {
-      const res = await addApiKeyBinanceToUser(user);
+      setLoading(true);
+      console.log('user no salvarChave', user);
+      const res = await addApiKeyBinanceToUser(user, apiKey);
       console.log(res);
       if (res.api_token_binance !== null) {
-        alert('Chave criada com sucesso!');
+        setCurrentUser(res);
       }
+      setLoading(false);
     } catch (error) {
       alert(JSON.stringify(error));
+    } finally {
+      setLoading(false);
     }
   };
 
   const pegarChave = async () => {
     try {
-      console.log("user", user);
+      console.log('user no pegarChave', user);
       const res = await decryptApiKeyBinance(user);
       console.log(res);
       // if(res.api_token_binance !== null) {
