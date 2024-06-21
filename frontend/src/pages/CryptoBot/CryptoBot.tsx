@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
-import { useContext } from 'react';
+import Logging from './components/Logging/Logging';
+import Strategies from './components/Strategies/Strategies';
+import Trade from './components/Trade/Trade';
+import Watchlist from './components/Watchlist/Watchlist';
 import { addApiKeyBinanceToUser, decryptApiKeyBinance } from './routes';
 
 const CryptoBot = () => {
@@ -43,10 +46,10 @@ const CryptoBot = () => {
       console.log('user no pegarChave', user);
       const res = await decryptApiKeyBinance(user);
       console.log(res);
-      if (res) {
-        setApiKeyResponse(res);
-        alert('Chave recuperada com sucesso!');
-      }
+      // if(res.api_token_binance !== null) {
+      //   alert('Chave criada com sucesso!');
+      // }
+      
     } catch (error) {
       alert(JSON.stringify(error));
     }
@@ -54,78 +57,34 @@ const CryptoBot = () => {
 
   return (
     <div>
-      {loading ? (
-        <div className="flex justify-center items-center h-screen">
-          <div>
-            <span className="visually-hidden">Loading...</span>
+      {/* <button 
+        onClick={salvarChave} 
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 mr-4"
+      >
+        GERAR CHAVE
+      </button>
+      <button 
+        onClick={pegarChave} 
+        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+      >
+        PEGAR CHAVE
+      </button> */}
+      <div className="w-full h-screen bg-gray-900 text-white">
+        <div className="w-full h-[90vh] flex flex-wrap border-2 border-gray-600">
+          <div className="w-[40%] h-[50%] border-2 border-gray-600">
+            <Trade />
+          </div>
+          <div className="w-[60%] h-[50%] overflow-auto border-2 border-gray-600">
+            <Strategies />
+          </div>
+          <div className="w-[40%] h-[50%] overflow-auto border-2 border-gray-600">
+            <Logging />
+          </div>
+          <div className="w-[60%] h-[50%] overflow-auto border-2 border-gray-600">
+            <Watchlist />
           </div>
         </div>
-      ) : (
-        <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center p-4">
-          {user && (
-            <>
-              {apiKeyResponse ? (
-                <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-                  <h1 className="text-2xl font-bold mb-4 text-center">CryptoBot</h1>
-                  <div className="mb-4">
-                    <label htmlFor="apiKey" className="block text-gray-700 text-sm font-bold mb-2">
-                      API Key Criptografada
-                    </label>
-                    <input
-                      id="apiKey"
-                      type="text"
-                      value={apiKeyResponse}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      disabled
-                    />
-                  </div>
-                  <div className="flex justify-center">
-                    <button
-                      onClick={pegarChave}
-                      className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-green-700">
-                      Recuperar Chave
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-md">
-                  <h1 className="text-2xl font-bold mb-4 text-center">CryptoBot</h1>
-                  <div className="mb-4">
-                    <label htmlFor="apiKey" className="block text-gray-700 text-sm font-bold mb-2">
-                      API Key
-                    </label>
-                    <input
-                      id="apiKey"
-                      type="text"
-                      value={apiKey}
-                      onChange={(e) => setApiKey(e.target.value)}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      placeholder="Insira sua API Key"
-                    />
-                  </div>
-                  <button
-                    onClick={salvarChave}
-                    className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-blue-700 mb-4">
-                    Gerar Chave
-                  </button>
-                  <button
-                    onClick={pegarChave}
-                    className="w-full bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-green-700">
-                    Pegar Chave
-                  </button>
-                  <div className="mt-4">
-                    {apiKeyResponse && (
-                      <div className="bg-gray-200 p-4 rounded">
-                        <p className="text-gray-700">{apiKeyResponse}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-        </div>
-      )}
+      </div>
     </div>
   );
 };
