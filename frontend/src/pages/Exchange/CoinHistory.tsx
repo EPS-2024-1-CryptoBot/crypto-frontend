@@ -11,6 +11,7 @@ import {
   Legend
 } from 'chart.js';
 import { api } from '../../config/api';
+import dayjs from 'dayjs';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -33,6 +34,7 @@ const CoinHistory = ({ coinName, setIsLoadingChart }: CoinHistoryProps) => {
       const response = await api.get(`/consultant/coin_history`, {
         params: { coin: coinName }
       });
+      console.log('Coin History:', response.data);
       setCoinHistory(
         response.data.prices.map((price: [number, number]) => ({
           timestamp: price[0],
@@ -48,14 +50,10 @@ const CoinHistory = ({ coinName, setIsLoadingChart }: CoinHistoryProps) => {
   };
 
   const timeStampToDateWithinLastThirtyDaysByCoinHistory = () => {
-    const today = new Date();
-    const lastThirtyDays = new Date(today);
-    lastThirtyDays.setDate(today.getDate() - 30);
+    coinHistory.map((history) => history.timestamp)
     const dates = [];
-    for (let i = 0; i < 30; i++) {
-      const date = new Date(lastThirtyDays);
-      date.setDate(lastThirtyDays.getDate() + i);
-      dates.push(date.toISOString().split('T')[0]);
+    for (let i = 0; i < coinHistory.length; i++) {
+      dates.push(dayjs(coinHistory[i].timestamp).format('DD/MM/YYYY'));
     }
     return dates;
   };
