@@ -32,6 +32,7 @@ const Extract = () => {
   const [balance, setBalance] = useState(0);
   const [extrato, setExtrato] = useState([]);
   const [, setBlockchain] = useState<Block[]>([]);
+  const [expandedIframe, setExpandedIframe] = useState(false);
 
   const handleBalance = async () => {
     try {
@@ -97,7 +98,7 @@ const Extract = () => {
 
   useEffect(() => {
     retrieveData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -133,8 +134,24 @@ const Extract = () => {
                 src="https://jsoncrack.com/widget"
                 width={`100%`}
                 height={`100%`}
+                style={
+                  expandedIframe
+                    ? {
+                        position: 'fixed',
+                        width: '80%',
+                        height: '80%',
+                        transform: 'translate(-50%, -50%)',
+                        top: '50%',
+                        left: '50%'
+                      }
+                    : undefined
+                }
               />
-              <button className="bg-primary p-2 rounded text-white">Expand</button>
+              <button
+                className="bg-primary p-2 rounded text-white"
+                onClick={() => setExpandedIframe(!expandedIframe)}>
+                {expandedIframe ? `Shrink` : `Expand`}
+              </button>
             </div>
           </div>
         </div>
