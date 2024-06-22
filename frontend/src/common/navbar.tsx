@@ -44,7 +44,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-secondary p-4 flex justify-between items-center">
+    <nav className="bg-secondary p-4 flex justify-between items-center sticky top-0">
       <div className="flex items-center cursor-pointer" onClick={() => navigate('/')}>
         <img src={logo} alt="logo" className="w-8 h-8 rounded-full mr-2" />
         <span className="text-white text-lg lg:text-xl">CryptoBot</span>
