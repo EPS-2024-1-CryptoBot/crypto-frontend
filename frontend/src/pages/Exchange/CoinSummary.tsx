@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { api } from '../../config/api';
+import { formatBrlValue } from '../../utils/utils';
 
 interface CoinSummary {
   brl: number;
@@ -35,7 +36,7 @@ const CoinSummary = () => {
       {Object.keys(coinSummary).length > 0 && (
         <div>
           <h2>Moedas Disponíveis</h2>
-          <div className="mt-4 max-h-[280px] overflow-auto px-52">
+          <div className="mt-4 max-h-[330px] overflow-auto px-52">
             <table className="table-auto w-full">
               <thead className="bg-gray-200 text-gray-700 sticky top-0">
                 <tr>
@@ -52,16 +53,16 @@ const CoinSummary = () => {
                   <tr key={key} className="bg-white border-b border-gray-200">
                     <td className="border border-gray-300 px-4 py-2">{key}</td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {coinSummary[key].brl.toFixed(2)}
+                      {formatBrlValue(coinSummary[key].brl)}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {coinSummary[key].brl_market_cap.toFixed(2)}
+                      {formatBrlValue(coinSummary[key].brl_market_cap)}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {coinSummary[key].brl_24h_vol.toFixed(2)}
+                      {formatBrlValue(coinSummary[key].brl_24h_vol)}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
-                      {coinSummary[key].brl_24h_change.toFixed(2)}
+                      {formatBrlValue(coinSummary[key].brl_24h_change)}
                     </td>
                     <td className="border border-gray-300 px-4 py-2">
                       {new Date(coinSummary[key].last_updated_at * 1000).toLocaleString()}
