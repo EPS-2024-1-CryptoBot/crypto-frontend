@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
-import Logging from './components/Logging/Logging';
 import Strategies from './components/Strategies/Strategies';
 import Trade from './components/Trade/Trade';
 import Watchlist from './components/Watchlist/Watchlist';
@@ -71,14 +70,11 @@ const CryptoBot = () => {
       </button> */}
       <div className="w-full h-screen bg-gray-900 text-white">
         <div className="w-full h-[90vh] flex flex-wrap border-2 border-gray-600">
-          <div className="w-[40%] h-[50%] border-2 border-gray-600">
-            <Trade />
-          </div>
-          <div className="w-[60%] h-[50%] overflow-auto border-2 border-gray-600">
+          <div className="w-full h-[50%] border-2 border-gray-600">
             <Strategies />
           </div>
           <div className="w-[40%] h-[50%] overflow-auto border-2 border-gray-600">
-            <Logging />
+            <Trade />
           </div>
           <div className="w-[60%] h-[50%] overflow-auto border-2 border-gray-600">
             <Watchlist />

@@ -20,7 +20,7 @@ interface SelectContractProps {
 
 const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
   const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState('Contract');
+  const [selected, setSelected] = useState('Escolha a cripto...');
   const [filter, setFilter] = useState('');
 
   const toggleActive = () => {
@@ -40,7 +40,7 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
   );
 
   return (
-    <div className="relative mt-2">
+    <div className="relative">
       <button
         className={`border border-gray-400 p-2 w-52 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}

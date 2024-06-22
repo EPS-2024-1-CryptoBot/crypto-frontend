@@ -9,7 +9,7 @@ interface SelectTimeframeProps {
 
 const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
   const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState('Timeframe');
+  const [selected, setSelected] = useState('Escolha...');
 
   const toggleActive = () => {
     if (!disabled) {
@@ -23,7 +23,7 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
   };
 
   return (
-    <div className="relative mt-2">
+    <div className="relative">
       <button
         className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}

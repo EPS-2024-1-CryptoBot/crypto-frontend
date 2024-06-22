@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaCrown } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { Tooltip } from 'react-tooltip';
 import { formatInputValue } from '../../../../utils/utils';
@@ -27,7 +28,7 @@ const Strategies: React.FC = () => {
   const [showLimitModal, setShowLimitModal] = useState(false);
 
   const addStrategy = () => {
-    if (strategies.length < 3) {
+    if (strategies.length < 2) {
       setStrategies([
         ...strategies,
         {
@@ -154,7 +155,7 @@ const Strategies: React.FC = () => {
   const renderStrategies = () => {
     return strategies.map((strategy, index) => (
       <tr key={index}>
-        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700 ">
+        <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectStrategy
             onSelect={(strategyType) => handleStrategySelect(index, strategyType)}
             disabled={strategy.isActive}
@@ -170,13 +171,13 @@ const Strategies: React.FC = () => {
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
-            placeholder="Balance %"
+            placeholder="Saldo %"
             value={strategy.balance}
             onChange={(e) => handleInputChange(index, 'balance', e.target.value)}
             disabled={strategy.isActive}
             maxLength={5}
             data-tooltip-id='balance-tooltip'
-            data-tooltip-content="% of your Balance"
+            data-tooltip-content="% do saldo a ser aplicado"
             data-tooltip-place='top'
           />
           <Tooltip id="balance-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
@@ -240,31 +241,34 @@ const Strategies: React.FC = () => {
       {showLimitModal && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
           <div className="bg-white p-4 rounded-lg shadow-md">
-            <p className="text-lg text-secondary font-bold">Upgrade to Premium</p>
-            <p className="text-sm text-secondary">Upgrade to a premium plan to add more than 3 strategies.</p>
+            <p className="text-lg text-secondary font-bold flex justify-center items-center">
+              Atualize para o <span className="text-gold ml-1">Premium</span> <FaCrown className="text-gold ml-1" />
+            </p>
+            <p className="text-sm text-secondary mt-2">Atualize para um plano premium para adicionar mais de 2 estratégias.</p>
+            
             <button
-              className="mt-2 px-4 py-2 bg-secondary text-white rounded"
+              className="mt-6 px-4 py-2 bg-secondary text-white rounded"
               onClick={() => setShowLimitModal(false)}
             >
-              Close
+              Fechar
             </button>
           </div>
         </div>
       )}
-      <button className="my-4 p-2 bg-secondary text-white rounded" onClick={addStrategy}>
-        Add Strategy
+      <button className="my-8 p-2 bg-secondary text-white rounded" onClick={addStrategy}>
+        Nova Estratégia
       </button>
       <div className="overflow-auto max-h-full">
-        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
+        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md text-center items-center">
           <thead>
             <tr>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Strategy Type</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Contract</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Timeframe</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Balance %</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">TP %</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">SL %</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parameters</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Tipo de Estratégia</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Cripto</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Prazo</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Saldo %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Take Profit %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Stop Loss %</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parâmetros</th>
               <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
               <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
             </tr>
