@@ -14,9 +14,9 @@ const Exchange = () => {
   };
 
   const handleTransactions = async () => {
-    const response = await api.get('/wallet/transactions');
+    const response = await api.get('/wallet/blockchain');
 
-    console.log('Transactions:', response.data);
+    console.log('Block:', response.data);
   }
 
   return (
@@ -28,7 +28,7 @@ const Exchange = () => {
         Get Balance
       </button>
       <button className="bg-tertiary text-white rounded p-4 ml-5" onClick={handleTransactions}>
-        Transactions
+        Current block
       </button>
     </div>
   );
