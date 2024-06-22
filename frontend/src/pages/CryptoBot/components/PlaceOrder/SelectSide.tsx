@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const strategies = ['Technical', 'Breakout'];
+const sides = ['BUY', 'SELL'];
 
-interface SelectStrategyProps {
+interface SelectSideProps {
   onSelect: (strategy: string) => void;
   disabled?: boolean;
 }
 
-const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) => {
+const SelectSide: React.FC<SelectSideProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState('Strategy');
+  const [selected, setSelected] = useState('Escolha...');
 
   const toggleActive = () => {
     if (!disabled) {
@@ -25,7 +25,7 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) =
   };
 
   return (
-    <div className="relative mt-2">
+    <div className="relative">
       <button
       className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
       onClick={toggleActive}
@@ -38,10 +38,10 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) =
         )}
       </button>
       {isActive && !disabled && (
-        <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
+        <div className="border border-gray-400 rounded mt-1 w-52 absolute bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
-            {strategies.length ? (
-              strategies.map((strategy) => (
+            {sides.length ? (
+              sides.map((strategy) => (
                 <option
                   key={strategy}
                   className={`cursor-pointer p-1 rounded ${
@@ -62,4 +62,4 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) =
   );
 };
 
-export default SelectStrategy;
+export default SelectSide;
