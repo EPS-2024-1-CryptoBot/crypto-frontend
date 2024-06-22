@@ -136,21 +136,6 @@ const Extract = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* <tr className="border-2 border-solid border-primary rounded-md p-4 min-h-[10rem]">
-                  <td className="text-center text-xl font-bold text-secondary">Bitcoin</td>
-                  <td className="text-center text-xl font-bold text-secondary">0</td>
-                  <td className="text-center text-xl font-bold text-secondary">R$ 0.00</td>
-                </tr>
-                <tr className="border-2 border-solid border-primary rounded-md p-4 min-h-[10rem]">
-                  <td className="text-center text-xl font-bold text-secondary">Ethereum</td>
-                  <td className="text-center text-xl font-bold text-secondary">0</td>
-                  <td className="text-center text-xl font-bold text-secondary">R$ 0.00</td>
-                </tr>
-                <tr className="border-2 border-solid border-primary rounded-md p-4 min-h-[10rem]">
-                  <td className="text-center text-xl font-bold text-secondary">Litecoin</td>
-                  <td className="text-center text-xl font-bold text-secondary">0</td>
-                  <td className="text-center text-xl font-bold text-secondary">R$ 0.00</td>
-                </tr> */}
                 {extrato.map((transaction: Transaction, index: number) => (
                   <tr
                     key={index}
