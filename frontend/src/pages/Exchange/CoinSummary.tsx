@@ -11,7 +11,7 @@ interface CoinSummary {
 
 const CoinSummary = () => {
   const [coinSummary, setCoinSummary] = useState<Record<string, CoinSummary>>({});
-  const [isLoadingCoins, setIsLoadingCoins] = useState<boolean>(false);
+  const [, setIsLoadingCoins] = useState<boolean>(false);
 
   const handleGetCoins = async () => {
     try {
