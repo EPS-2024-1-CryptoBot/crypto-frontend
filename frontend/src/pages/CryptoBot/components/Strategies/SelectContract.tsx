@@ -42,7 +42,7 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
   return (
     <div className="relative">
       <button
-        className={`border border-gray-400 p-2 w-52 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+        className={`border border-gray-400 p-2 w-44 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
         onClick={toggleActive}
       >
         <span>{selected}</span>
@@ -53,7 +53,7 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
         )}
       </button>
       {isActive && !disabled && (
-        <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
+        <div className="border border-gray-400 rounded mt-1 w-44 absolute z-10 bg-white p-2">
           <input
             type="text"
             className="p-1 w-full mb-2 outline-none text-sm placeholder-gray-600 text-gray-600"

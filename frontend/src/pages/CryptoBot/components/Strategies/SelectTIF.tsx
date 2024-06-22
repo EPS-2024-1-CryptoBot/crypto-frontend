@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const timeframes = ['1m', '5m', '15m', '30m', '1h', '4h'];
+const tifs = ['GTC', 'GTD', 'IOC'];
 
-interface SelectTimeframeProps {
+interface SelectTIFSProps {
+  onSelect: (strategy: string) => void;
   disabled?: boolean;
 }
 
-const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
+const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Escolha...');
 
@@ -17,16 +18,17 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
     }
   };
 
-  const handleSelect = (timeframe: string) => {
-    setSelected(timeframe);
+  const handleSelect = (strategy: string) => {
+    setSelected(strategy);
+    onSelect(strategy); // Notify parent component of the selected strategy
     setIsActive(false);
   };
 
   return (
     <div className="relative">
       <button
-        className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
-        onClick={toggleActive}
+      className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+      onClick={toggleActive}
       >
         <span>{selected}</span>
         {isActive ? (
@@ -38,16 +40,16 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
       {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
-            {timeframes.length ? (
-              timeframes.map((timeframe) => (
+            {tifs.length ? (
+              tifs.map((strategy) => (
                 <option
-                  key={timeframe}
+                  key={strategy}
                   className={`cursor-pointer p-1 rounded ${
-                    timeframe === selected ? 'bg-gray-200' : ''
+                    strategy === selected ? 'bg-gray-200' : ''
                   }`}
-                  onClick={() => handleSelect(timeframe)}
+                  onClick={() => handleSelect(strategy)}
                 >
-                  {timeframe}
+                  {strategy}
                 </option>
               ))
             ) : (
@@ -60,4 +62,4 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
   );
 };
 
-export default SelectTimeframe;
+export default SelectTIF;

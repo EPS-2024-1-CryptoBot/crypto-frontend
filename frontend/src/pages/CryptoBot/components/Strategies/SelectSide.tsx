@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const strategies = ['Technical', 'Breakout'];
+const sides = ['Buy', 'Sell'];
 
-interface SelectStrategyProps {
+interface SelectSideProps {
   onSelect: (strategy: string) => void;
   disabled?: boolean;
 }
 
-const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) => {
+const SelectSide: React.FC<SelectSideProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Escolha...');
 
@@ -40,8 +40,8 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) =
       {isActive && !disabled && (
         <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
-            {strategies.length ? (
-              strategies.map((strategy) => (
+            {sides.length ? (
+              sides.map((strategy) => (
                 <option
                   key={strategy}
                   className={`cursor-pointer p-1 rounded ${
@@ -62,4 +62,4 @@ const SelectStrategy: React.FC<SelectStrategyProps> = ({ onSelect, disabled }) =
   );
 };
 
-export default SelectStrategy;
+export default SelectSide;
