@@ -127,8 +127,8 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/statement" className="text-white hover:underline">
-                  Minerar
+                <Link to="/consultor" className="text-white hover:underline">
+                  Consultor
                 </Link>
               </li>
               <li>
