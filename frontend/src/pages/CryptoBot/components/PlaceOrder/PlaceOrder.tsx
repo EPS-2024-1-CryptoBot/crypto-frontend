@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaCrown } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { Tooltip } from 'react-tooltip';
-import { formatInputValue } from '../../../../utils/utils';
+import { convertToDecimalNumber, formatQuantity, formatToCurrency } from '../../../../utils/utils';
 import SelectContract from './SelectContract';
 import SelectOrderType from './SelectOrderType';
 import SelectSide from './SelectSide';
@@ -51,9 +51,16 @@ const PlaceOrder: React.FC = () => {
   };
 
   const handleInputChange = (index: number, field: keyof Order, value: string) => {
-    const boundedValue = formatInputValue(value);
+    let updatedValue = value;
+    if (field === 'quantity') {
+      updatedValue = formatQuantity(value);
+    } else if (field === 'price' || field === 'stopPrice') {
+      updatedValue = formatToCurrency(convertToDecimalNumber(value));
+      console.log(`Field: ${field}, Displayed Value: ${updatedValue}, Stored Value: ${convertToDecimalNumber(value)}`);
+    }
+
     const updatedOrders = order.map((order, i) =>
-      i === index ? { ...order, [field]: boundedValue } : order
+      i === index ? { ...order, [field]: updatedValue } : order
     );
     setOrder(updatedOrders);
   };
@@ -89,6 +96,7 @@ const PlaceOrder: React.FC = () => {
             value={order.quantity ?? ''}
             onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
             disabled={order.isActive}
+            maxLength={8}
             data-tooltip-id='qt-tooltip'
             data-tooltip-content="Quantidade. Ex.: 0.02"
             data-tooltip-place='top'
@@ -101,6 +109,7 @@ const PlaceOrder: React.FC = () => {
             value={order.price ?? ''}
             onChange={(e) => handleInputChange(index, 'price', e.target.value)}
             disabled={order.isActive}
+            maxLength={8}
             data-tooltip-id='price-tooltip'
             data-tooltip-content="Preço. Ex.: 99.9 (U$)"
             data-tooltip-place='top'
@@ -120,6 +129,7 @@ const PlaceOrder: React.FC = () => {
             value={order.quantity ?? ''}
             onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
             disabled={order.isActive}
+            maxLength={8}
             data-tooltip-id='qt-tooltip'
             data-tooltip-content="Quantidade. Ex.: 0.02"
             data-tooltip-place='top'
@@ -139,6 +149,7 @@ const PlaceOrder: React.FC = () => {
             value={order.quantity ?? ''}
             onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
             disabled={order.isActive}
+            maxLength={8}
             data-tooltip-id='qt-tooltip'
             data-tooltip-content="Quantidade. Ex.: 0.02"
             data-tooltip-place='top'
@@ -151,6 +162,7 @@ const PlaceOrder: React.FC = () => {
             value={order.price ?? ''}
             onChange={(e) => handleInputChange(index, 'price', e.target.value)}
             disabled={order.isActive}
+            maxLength={8}
             data-tooltip-id='price-tooltip'
             data-tooltip-content="Preço. Ex.: 99.9 (U$)"
             data-tooltip-place='top'
@@ -163,6 +175,7 @@ const PlaceOrder: React.FC = () => {
             value={order.stopPrice ?? ''}
             onChange={(e) => handleInputChange(index, 'stopPrice', e.target.value)}
             disabled={order.isActive}
+            maxLength={8}
             data-tooltip-id='stop-price-tooltip'
             data-tooltip-content="Preço de parada. Ex.: 99.9 (U$)"
             data-tooltip-place='top'
