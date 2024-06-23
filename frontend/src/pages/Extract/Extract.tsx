@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { api } from '../../config/api';
-import { formatBrlValue } from '../../utils/utils';
+import { AuthContext } from '../../contexts/authContext';
 
 type Transaction = {
   sender: string;
@@ -28,7 +28,7 @@ export type Block = {
 };
 
 const Extract = () => {
-  // ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+  const {currentUser} = useContext(AuthContext)
   const [balance, setBalance] = useState(0);
   const [extrato, setExtrato] = useState([]);
   const [, setBlockchain] = useState<Block[]>([]);
@@ -105,11 +105,12 @@ const Extract = () => {
     <div className="h-full w-full flex flex-col items-center gap-10 p-4 md:p-10">
       <div className="flex flex-col md:flex-row justify-center w-full">
         <div className="w-full md:w-1/2 pt-[1rem] md:mr-5">
-          <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem]">
-            <span className="text-3xl">Saldo Atual (CBU) </span>
+          <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem] flex flex-col justify-between">
+            <span className="text-3xl">Saldo Atual </span>
             <div className="pt-4 text-6xl font-bold text-primary lg:text-8xl">
-              {formatBrlValue(balance)}
+              {(balance)} CBUs
             </div>
+            Id para transações: {currentUser?.firebaseUid}
           </div>
           <div className="flex flex-row pt-2">
             <div className="flex gap-4 w-full">
@@ -147,7 +148,7 @@ const Extract = () => {
             <button
               className="bg-primary p-2 rounded text-white"
               onClick={() => setExpandedIframe(!expandedIframe)}>
-              {expandedIframe ? `Shrink` : `Expand`}
+              {expandedIframe ? `Diminuir` : `Expandir`}
             </button>
           </div>
         </div>

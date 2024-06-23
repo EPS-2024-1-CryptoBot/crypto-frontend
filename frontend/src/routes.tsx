@@ -10,7 +10,7 @@ import Transfer from './pages/Transfer/Transfer';
 import CryptoBot from './pages/CryptoBot/CryptoBot';
 import Exchange from './pages/Exchange/Exchange';
 import Extract from './pages/Extract/Extract';
-import Statement from './pages/Statement/Statement';
+import Consultor from './pages/Consultor/Consultor';
 
 
 const AppRoutes = () => {
@@ -28,7 +28,7 @@ const AppRoutes = () => {
         <Route Component={CryptoBot} path="/crypto-bot" />
         <Route Component={Exchange} path="/exchange" />
         <Route Component={Extract} path="/extract" />
-        <Route Component={Statement} path="/statement" />
+        <Route Component={Consultor} path="/consultor" />
       </Routes>
     </BrowserRouter>
   );
