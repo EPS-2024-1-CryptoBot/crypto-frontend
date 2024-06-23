@@ -4,7 +4,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 const tifs = ['GTC', 'GTD', 'IOC'];
 
 interface SelectTIFSProps {
-  onSelect: (strategy: string) => void;
+  onSelect: (tif: string) => void;
   disabled?: boolean;
 }
 
@@ -18,9 +18,9 @@ const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
     }
   };
 
-  const handleSelect = (strategy: string) => {
-    setSelected(strategy);
-    onSelect(strategy); // Notify parent component of the selected strategy
+  const handleSelect = (tif: string) => {
+    setSelected(tif);
+    onSelect(tif);
     setIsActive(false);
   };
 
@@ -41,15 +41,15 @@ const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
         <div className="border border-gray-400 rounded mt-1 w-52 absolute bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {tifs.length ? (
-              tifs.map((strategy) => (
+              tifs.map((tif) => (
                 <option
-                  key={strategy}
+                  key={tif}
                   className={`cursor-pointer p-1 rounded ${
-                    strategy === selected ? 'bg-gray-200' : ''
+                    tif === selected ? 'bg-gray-200' : ''
                   }`}
-                  onClick={() => handleSelect(strategy)}
+                  onClick={() => handleSelect(tif)}
                 >
-                  {strategy}
+                  {tif}
                 </option>
               ))
             ) : (

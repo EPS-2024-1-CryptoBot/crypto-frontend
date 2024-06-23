@@ -6,6 +6,7 @@ import { convertToDecimalNumber, formatQuantity, formatToCurrency } from '../../
 import SelectContract from './SelectContract';
 import SelectOrderType from './SelectOrderType';
 import SelectSide from './SelectSide';
+import SelectTIF from './SelectTIF';
 
 interface Order {
   symbol: string;
@@ -44,9 +45,14 @@ const PlaceOrder: React.FC = () => {
 
   const toggleActive = (index: number) => {
     setOrder(
-      order.map((order, i) =>
-        i === index ? { ...order, isActive: !order.isActive } : order
-      )
+      order.map((order, i) => {
+        if (i === index) {
+          const updatedOrder = { ...order, isActive: !order.isActive };
+          console.log(JSON.stringify(updatedOrder, null, 2));
+          return updatedOrder;
+        }
+        return order;
+      })
     );
   };
 
@@ -65,10 +71,26 @@ const PlaceOrder: React.FC = () => {
     setOrder(updatedOrders);
   };
 
-  const handleOrderSelect = (index: number, orderType: string) => {
+  const handleOrderTypeSelect = (index: number, orderType: string) => {
     setOrder(
       order.map((order, i) =>
         i === index ? { ...order, orderType } : order
+      )
+    );
+  };
+
+  const handleOrderSideSelect = (index: number, side: string) => {
+    setOrder(
+      order.map((order, i) =>
+        i === index ? { ...order, side } : order
+      )
+    );
+  };
+
+  const handleOrderTIFSelect = (index: number, tif: string) => {
+    setOrder(
+      order.map((order, i) =>
+        i === index ? { ...order, tif } : order
       )
     );
   };
@@ -77,18 +99,10 @@ const PlaceOrder: React.FC = () => {
     if (order.orderType === 'Limit') {
       return (
         <div className="flex space-x-2">
-          <input
-            type="text"
-            className="p-2 border border-gray-300 rounded text-black w-28"
-            placeholder="Time in Force"
-            value={order.tif ?? ''}
-            onChange={(e) => handleInputChange(index, 'tif', e.target.value)}
+           <SelectTIF 
+            onSelect={(orderType) => handleOrderTIFSelect(index, orderType)}
             disabled={order.isActive}
-            data-tooltip-id='tif-tooltip'
-            data-tooltip-content="Time in force. Ex.: GTC"
-            data-tooltip-place='top'
           />
-          <Tooltip id="tif-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
           <input
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-28"
@@ -196,13 +210,13 @@ const PlaceOrder: React.FC = () => {
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectSide
-            onSelect={(orderType) => handleOrderSelect(index, orderType)}
+            onSelect={(orderType) => handleOrderSideSelect(index, orderType)}
             disabled={order.isActive}
           />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectOrderType 
-          onSelect={(orderType) => handleOrderSelect(index, orderType)}
+          onSelect={(orderType) => handleOrderTypeSelect(index, orderType)}
           disabled={order.isActive} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">

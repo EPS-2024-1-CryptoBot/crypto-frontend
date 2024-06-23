@@ -4,7 +4,7 @@ import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 const orderTypes = ['Market', 'Limit', 'Stop', 'Take Profit'];
 
 interface SelectOrderTypeProps {
-  onSelect: (strategy: string) => void;
+  onSelect: (orderType: string) => void;
   disabled?: boolean;
 }
 
@@ -18,9 +18,9 @@ const SelectOrderType: React.FC<SelectOrderTypeProps> = ({ onSelect, disabled })
     }
   };
 
-  const handleSelect = (strategy: string) => {
-    setSelected(strategy);
-    onSelect(strategy); // Notify parent component of the selected strategy
+  const handleSelect = (orderType: string) => {
+    setSelected(orderType);
+    onSelect(orderType); // Notify parent component of the selected orderType
     setIsActive(false);
   };
 
@@ -41,15 +41,15 @@ const SelectOrderType: React.FC<SelectOrderTypeProps> = ({ onSelect, disabled })
         <div className="border border-gray-400 rounded mt-1 w-52 absolute bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {orderTypes.length ? (
-              orderTypes.map((strategy) => (
+              orderTypes.map((orderType) => (
                 <option
-                  key={strategy}
+                  key={orderType}
                   className={`cursor-pointer p-1 rounded ${
-                    strategy === selected ? 'bg-gray-200' : ''
+                    orderType === selected ? 'bg-gray-200' : ''
                   }`}
-                  onClick={() => handleSelect(strategy)}
+                  onClick={() => handleSelect(orderType)}
                 >
-                  {strategy}
+                  {orderType}
                 </option>
               ))
             ) : (
