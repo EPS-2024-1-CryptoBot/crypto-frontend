@@ -7,21 +7,6 @@ import SelectContract from './SelectContract';
 import SelectOrderType from './SelectOrderType';
 import SelectSide from './SelectSide';
 
-interface Strategy {
-  strategyType: string;
-  contract: string;
-  timeframe: string;
-  balance: string;
-  tp: string;
-  sl: string;
-  isActive: boolean;
-  rsiPeriods?: string;
-  macdFastLength?: string;
-  macdSlowLength?: string;
-  macdSignalLength?: string;
-  minimumVolume?: string;
-}
-
 interface Order {
   symbol: string;
   side: string;
@@ -34,20 +19,17 @@ interface Order {
 }
 
 const PlaceOrder: React.FC = () => {
-  const [strategies, setStrategies] = useState<Strategy[]>([]);
+  const [order, setOrder] = useState<Order[]>([]);
   const [showLimitModal, setShowLimitModal] = useState(false);
 
-  const addStrategy = () => {
-    if (strategies.length < 10) {
-      setStrategies([
-        ...strategies,
+  const addOrder = () => {
+    if (order.length < 10) {
+      setOrder([
+        ...order,
         {
-          strategyType: '',
-          contract: '',
-          timeframe: '',
-          balance: '',
-          tp: '',
-          sl: '',
+          symbol: '',
+          side: '',
+          orderType: '',
           isActive: false,
         },
       ]);
@@ -56,45 +38,45 @@ const PlaceOrder: React.FC = () => {
     }
   };
 
-  const removeStrategy = (index: number) => {
-    setStrategies(strategies.filter((_, i) => i !== index));
+  const removeOrder = (index: number) => {
+    setOrder(order.filter((_, i) => i !== index));
   };
 
   const toggleActive = (index: number) => {
-    setStrategies(
-      strategies.map((strategy, i) =>
-        i === index ? { ...strategy, isActive: !strategy.isActive } : strategy
+    setOrder(
+      order.map((order, i) =>
+        i === index ? { ...order, isActive: !order.isActive } : order
       )
     );
   };
 
-  const handleInputChange = (index: number, field: keyof Strategy, value: string) => {
+  const handleInputChange = (index: number, field: keyof Order, value: string) => {
     const boundedValue = formatInputValue(value);
-    const updatedStrategies = strategies.map((strategy, i) =>
-      i === index ? { ...strategy, [field]: boundedValue } : strategy
+    const updatedOrders = order.map((order, i) =>
+      i === index ? { ...order, [field]: boundedValue } : order
     );
-    setStrategies(updatedStrategies);
+    setOrder(updatedOrders);
   };
 
-  const handleStrategySelect = (index: number, strategyType: string) => {
-    setStrategies(
-      strategies.map((strategy, i) =>
-        i === index ? { ...strategy, strategyType } : strategy
+  const handleOrderSelect = (index: number, orderType: string) => {
+    setOrder(
+      order.map((order, i) =>
+        i === index ? { ...order, orderType } : order
       )
     );
   };
 
-  const renderAdditionalInputs = (strategy: Strategy, index: number) => {
-    if (strategy.strategyType === 'Limit') {
+  const renderAdditionalInputs = (order: Order, index: number) => {
+    if (order.orderType === 'Limit') {
       return (
         <div className="flex space-x-2">
           <input
             type="text"
-            className="p-2 border border-gray-300 rounded text-black w-24"
+            className="p-2 border border-gray-300 rounded text-black w-28"
             placeholder="Time in Force"
-            value={strategy.rsiPeriods ?? ''}
-            onChange={(e) => handleInputChange(index, 'rsiPeriods', e.target.value)}
-            disabled={strategy.isActive}
+            value={order.tif ?? ''}
+            onChange={(e) => handleInputChange(index, 'tif', e.target.value)}
+            disabled={order.isActive}
             data-tooltip-id='tif-tooltip'
             data-tooltip-content="Time in force. Ex.: GTC"
             data-tooltip-place='top'
@@ -102,11 +84,11 @@ const PlaceOrder: React.FC = () => {
           <Tooltip id="tif-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
           <input
             type="text"
-            className="p-2 border border-gray-300 rounded text-black w-24"
+            className="p-2 border border-gray-300 rounded text-black w-28"
             placeholder="Quantidade"
-            value={strategy.minimumVolume ?? ''}
-            onChange={(e) => handleInputChange(index, 'minimumVolume', e.target.value)}
-            disabled={strategy.isActive}
+            value={order.quantity ?? ''}
+            onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
+            disabled={order.isActive}
             data-tooltip-id='qt-tooltip'
             data-tooltip-content="Quantidade. Ex.: 0.02"
             data-tooltip-place='top'
@@ -116,11 +98,11 @@ const PlaceOrder: React.FC = () => {
             type="text"
             className="p-2 border border-gray-300 rounded text-black w-24"
             placeholder="Preço"
-            value={strategy.macdSlowLength ?? ''}
-            onChange={(e) => handleInputChange(index, 'macdSlowLength', e.target.value)}
-            disabled={strategy.isActive}
+            value={order.price ?? ''}
+            onChange={(e) => handleInputChange(index, 'price', e.target.value)}
+            disabled={order.isActive}
             data-tooltip-id='price-tooltip'
-            data-tooltip-content="Preço. Ex.: 1000(USD)"
+            data-tooltip-content="Preço. Ex.: 99.9 (U$)"
             data-tooltip-place='top'
           />
           <Tooltip id="price-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
@@ -128,16 +110,16 @@ const PlaceOrder: React.FC = () => {
       );
     }
 
-    if (strategy.strategyType === 'Market') {
+    if (order.orderType === 'Market') {
       return (
         <>
           <input
             type="text"
-            className="p-2 border border-gray-300 rounded text-black w-24"
+            className="p-2 border border-gray-300 rounded text-black w-28"
             placeholder="Quantidade"
-            value={strategy.minimumVolume ?? ''}
-            onChange={(e) => handleInputChange(index, 'minimumVolume', e.target.value)}
-            disabled={strategy.isActive}
+            value={order.quantity ?? ''}
+            onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
+            disabled={order.isActive}
             data-tooltip-id='qt-tooltip'
             data-tooltip-content="Quantidade. Ex.: 0.02"
             data-tooltip-place='top'
@@ -147,42 +129,85 @@ const PlaceOrder: React.FC = () => {
       );
     }
 
+    if (order.orderType === 'Stop' || order.orderType === 'Take Profit') {
+      return (
+        <div className="flex space-x-2">
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-28"
+            placeholder="Quantidade"
+            value={order.quantity ?? ''}
+            onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
+            disabled={order.isActive}
+            data-tooltip-id='qt-tooltip'
+            data-tooltip-content="Quantidade. Ex.: 0.02"
+            data-tooltip-place='top'
+          />
+          <Tooltip id="qt-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }}/>
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="Preço"
+            value={order.price ?? ''}
+            onChange={(e) => handleInputChange(index, 'price', e.target.value)}
+            disabled={order.isActive}
+            data-tooltip-id='price-tooltip'
+            data-tooltip-content="Preço. Ex.: 99.9 (U$)"
+            data-tooltip-place='top'
+          />
+          <Tooltip id="price-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded text-black w-24"
+            placeholder="Stop Price"
+            value={order.stopPrice ?? ''}
+            onChange={(e) => handleInputChange(index, 'stopPrice', e.target.value)}
+            disabled={order.isActive}
+            data-tooltip-id='stop-price-tooltip'
+            data-tooltip-content="Preço de parada. Ex.: 99.9 (U$)"
+            data-tooltip-place='top'
+          />
+          <Tooltip id="stop-price-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }}/>
+        </div>
+      );
+    }
+
     return null;
   };
 
   const renderStrategies = () => {
-    return strategies.map((strategy, index) => (
+    return order.map((order, index) => (
       <tr key={index}>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <SelectContract disabled={strategy.isActive} />
+          <SelectContract disabled={order.isActive} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectSide
-            onSelect={(strategyType) => handleStrategySelect(index, strategyType)}
-            disabled={strategy.isActive}
+            onSelect={(orderType) => handleOrderSelect(index, orderType)}
+            disabled={order.isActive}
           />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectOrderType 
-          onSelect={(strategyType) => handleStrategySelect(index, strategyType)}
-          disabled={strategy.isActive} />
+          onSelect={(orderType) => handleOrderSelect(index, orderType)}
+          disabled={order.isActive} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          {renderAdditionalInputs(strategy, index)}
+          {renderAdditionalInputs(order, index)}
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <button
-            className={`p-2 border rounded ${strategy.isActive ? 'bg-green-500' : 'bg-red-500'}`}
+            className={`p-2 border rounded ${order.isActive ? 'bg-green-500' : 'bg-red-500'}`}
             onClick={() => toggleActive(index)}
           >
-            {strategy.isActive ? 'ON' : 'OFF'}
+            {order.isActive ? 'ON' : 'OFF'}
           </button>
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <button 
-            className={`p-3 bg-secondary border rounded ${strategy.isActive ? 'cursor-not-allowed opacity-50' : ''}`} 
-            onClick={() => !strategy.isActive && removeStrategy(index)} 
-            disabled={strategy.isActive}
+            className={`p-3 bg-secondary border rounded ${order.isActive ? 'cursor-not-allowed opacity-50' : ''}`} 
+            onClick={() => !order.isActive && removeOrder(index)} 
+            disabled={order.isActive}
           >
             <MdClose />
           </button>
@@ -200,7 +225,6 @@ const PlaceOrder: React.FC = () => {
               Atualize para o <span className="text-yellow-500 ml-1">Premium</span> <FaCrown className="text-yellow-500 ml-1" />
             </p>
             <p className="text-sm text-secondary mt-2">Atualize para um plano premium para adicionar mais de 10 ofertas.</p>
-            
             <button
               className="mt-6 px-4 py-2 bg-secondary text-white rounded"
               onClick={() => setShowLimitModal(false)}
@@ -210,7 +234,7 @@ const PlaceOrder: React.FC = () => {
           </div>
         </div>
       )}
-      <button className="my-8 p-2 bg-secondary text-white rounded" onClick={addStrategy}>
+      <button className="my-8 p-2 bg-secondary text-white rounded" onClick={addOrder}>
         Nova Oferta
       </button>
       <div className="max-h-full">

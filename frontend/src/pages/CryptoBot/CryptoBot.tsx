@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
-import Strategies from './components/Strategies/Strategies';
+import PlaceOrder from './components/PlaceOrder/PlaceOrder';
 import Trade from './components/Trade/Trade';
 import { addApiKeyBinanceToUser, decryptApiKeyBinance } from './routes';
 
@@ -73,7 +73,7 @@ const CryptoBot = () => {
             <Trade />
           </div>
           <div className="w-[70%] h-full border-2 border-gray-600">
-            <Strategies />
+            <PlaceOrder />
           </div>
         </div>
       </div>

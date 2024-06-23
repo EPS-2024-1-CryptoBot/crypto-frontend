@@ -16,11 +16,6 @@ const Trade = () => {
           placeholder="Binance"
           className="mr-2 p-2 border border-gray-300 rounded text-black"
         />
-        <input
-          type="text"
-          placeholder="Bitmex"
-          className="p-2 border border-gray-300 rounded text-black"
-        />
       </div>
       <div className="overflow-auto h-full">
         <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const sides = ['Buy', 'Sell'];
+const tifs = ['GTC', 'GTD', 'IOC'];
 
-interface SelectSideProps {
+interface SelectTIFSProps {
   onSelect: (strategy: string) => void;
   disabled?: boolean;
 }
 
-const SelectSide: React.FC<SelectSideProps> = ({ onSelect, disabled }) => {
+const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Escolha...');
 
@@ -38,10 +38,10 @@ const SelectSide: React.FC<SelectSideProps> = ({ onSelect, disabled }) => {
         )}
       </button>
       {isActive && !disabled && (
-        <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
+        <div className="border border-gray-400 rounded mt-1 w-52 absolute   bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
-            {sides.length ? (
-              sides.map((strategy) => (
+            {tifs.length ? (
+              tifs.map((strategy) => (
                 <option
                   key={strategy}
                   className={`cursor-pointer p-1 rounded ${
@@ -62,4 +62,4 @@ const SelectSide: React.FC<SelectSideProps> = ({ onSelect, disabled }) => {
   );
 };
 
-export default SelectSide;
+export default SelectTIF;

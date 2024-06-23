@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const tifs = ['GTC', 'GTD', 'IOC'];
+const orderTypes = ['Market', 'Limit', 'Stop', 'Take Profit'];
 
-interface SelectTIFSProps {
+interface SelectOrderTypeProps {
   onSelect: (strategy: string) => void;
   disabled?: boolean;
 }
 
-const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
+const SelectOrderType: React.FC<SelectOrderTypeProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Escolha...');
 
@@ -38,10 +38,10 @@ const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
         )}
       </button>
       {isActive && !disabled && (
-        <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
+        <div className="border border-gray-400 rounded mt-1 w-52 absolute   bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
-            {tifs.length ? (
-              tifs.map((strategy) => (
+            {orderTypes.length ? (
+              orderTypes.map((strategy) => (
                 <option
                   key={strategy}
                   className={`cursor-pointer p-1 rounded ${
@@ -62,4 +62,4 @@ const SelectTIF: React.FC<SelectTIFSProps> = ({ onSelect, disabled }) => {
   );
 };
 
-export default SelectTIF;
+export default SelectOrderType;
