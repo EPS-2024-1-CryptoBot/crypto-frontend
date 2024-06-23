@@ -48,7 +48,7 @@ const PlaceOrder: React.FC = () => {
       order.map((order, i) => {
         if (i === index) {
           const updatedOrder = { ...order, isActive: !order.isActive };
-          console.log(JSON.stringify(updatedOrder, null, 2));
+          // console.log(JSON.stringify(updatedOrder, null, 2));
           return updatedOrder;
         }
         return order;
@@ -62,7 +62,6 @@ const PlaceOrder: React.FC = () => {
       updatedValue = formatQuantity(value);
     } else if (field === 'price' || field === 'stopPrice') {
       updatedValue = formatToCurrency(convertToDecimalNumber(value));
-      console.log(`Field: ${field}, Displayed Value: ${updatedValue}, Stored Value: ${convertToDecimalNumber(value)}`);
     }
 
     const updatedOrders = order.map((order, i) =>
@@ -73,9 +72,22 @@ const PlaceOrder: React.FC = () => {
 
   const handleOrderTypeSelect = (index: number, orderType: string) => {
     setOrder(
-      order.map((order, i) =>
-        i === index ? { ...order, orderType } : order
-      )
+      order.map((order, i) => {
+        if (i === index) {
+          let updatedOrder: Order = { ...order, orderType };
+
+          if (orderType === 'Market') {
+            updatedOrder = { ...updatedOrder, tif: undefined, price: undefined, stopPrice: undefined };
+          } else if (orderType === 'Limit') {
+            updatedOrder = { ...updatedOrder, stopPrice: undefined };
+          } else if (orderType === 'Stop' || orderType === 'Take Profit') {
+            updatedOrder = { ...updatedOrder, tif: undefined };
+          }
+
+          return updatedOrder;
+        }
+        return order;
+      })
     );
   };
 
@@ -99,8 +111,8 @@ const PlaceOrder: React.FC = () => {
     if (order.orderType === 'Limit') {
       return (
         <div className="flex space-x-2">
-           <SelectTIF 
-            onSelect={(orderType) => handleOrderTIFSelect(index, orderType)}
+          <SelectTIF 
+            onSelect={(tif) => handleOrderTIFSelect(index, tif)}
             disabled={order.isActive}
           />
           <input
@@ -210,14 +222,15 @@ const PlaceOrder: React.FC = () => {
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectSide
-            onSelect={(orderType) => handleOrderSideSelect(index, orderType)}
+            onSelect={(side) => handleOrderSideSelect(index, side)}
             disabled={order.isActive}
           />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectOrderType 
-          onSelect={(orderType) => handleOrderTypeSelect(index, orderType)}
-          disabled={order.isActive} />
+            onSelect={(orderType) => handleOrderTypeSelect(index, orderType)}
+            disabled={order.isActive}
+          />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           {renderAdditionalInputs(order, index)}

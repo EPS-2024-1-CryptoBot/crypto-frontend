@@ -38,7 +38,7 @@ const SelectOrderType: React.FC<SelectOrderTypeProps> = ({ onSelect, disabled })
         )}
       </button>
       {isActive && !disabled && (
-        <div className="border border-gray-400 rounded mt-1 w-52 absolute bg-white p-2">
+        <div className="border border-gray-400 rounded mt-1 w-32 absolute bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
             {orderTypes.length ? (
               orderTypes.map((orderType) => (
