@@ -3,23 +3,30 @@ import { api } from './api';
 
 const News = () => {
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    const fetchNews = async () => {
-      try {
-        const response = await api.get('news/top', {
-          params: {
-            search: 'crypto'
-          }
-        });
-        console.log('response.data', response.data);
-        setNews(response.data.data);
-      } catch (error) {
-        console.error('Erro ao buscar notícias:', error);
-      }
-    };
+    // const fetchNews = async () => {
+    //   try {
+    //     const response = await api.get('news/top', {
+    //       params: {
+    //         search: 'crypto'
+    //       }
+    //     });
+    //     console.log('response.data', response.data);
+    //     setNews(response.data.data);
+    //   } catch (error) {
+    //     console.error('Erro ao buscar notícias:', error);
+    //   } finally {
+    //     setLoading(false);
+    //   }
+    // };
 
-    fetchNews();
+    // fetchNews();
   }, []);
+
+  if (loading) {
+    return <div className="w-full h-full flex justify-center items-center">Carregando...</div>;
+  }
 
   return (
     <div className="w-full h-full bg-gray-100 overflow-auto">
