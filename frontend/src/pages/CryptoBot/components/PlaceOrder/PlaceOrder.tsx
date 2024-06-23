@@ -175,7 +175,7 @@ const PlaceOrder: React.FC = () => {
     return null;
   };
 
-  const renderStrategies = () => {
+  const renderOrders = () => {
     return order.map((order, index) => (
       <tr key={index}>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
@@ -250,7 +250,7 @@ const PlaceOrder: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {renderStrategies()}
+            {renderOrders()}
           </tbody>
         </table>
       </div>
