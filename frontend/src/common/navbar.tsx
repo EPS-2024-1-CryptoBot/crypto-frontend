@@ -132,6 +132,11 @@ const Navbar = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/stock" className="text-white hover:underline">
+                  Consultor de Acoes
+                </Link>
+              </li>
+              <li>
                 <span
                   onClick={handleLogout}
                   className="text-white hover:underline cursor-pointer lg:hidden">

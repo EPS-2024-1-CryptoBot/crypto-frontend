@@ -11,6 +11,7 @@ import CryptoBot from './pages/CryptoBot/CryptoBot';
 import Exchange from './pages/Exchange/Exchange';
 import Extract from './pages/Extract/Extract';
 import Consultor from './pages/Consultor/Consultor';
+import ConsultorAcoes from './pages/ConsultorAcoes/ConsultorAcoes';
 
 
 const AppRoutes = () => {
@@ -29,6 +30,7 @@ const AppRoutes = () => {
         <Route Component={Exchange} path="/exchange" />
         <Route Component={Extract} path="/extract" />
         <Route Component={Consultor} path="/consultor" />
+        <Route Component={ConsultorAcoes} path="/stock" />
       </Routes>
     </BrowserRouter>
   );
