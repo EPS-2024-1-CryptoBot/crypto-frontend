@@ -1,6 +1,5 @@
 import { api } from "../../../../config/api";
-import { AuthContext } from "../../../../contexts/authContext";
-import { useContext } from "react";
+
 
 const rows = [
   { symbol: 'BTC/USD', exchange: 'Binance', bid: '45000', ask: '45100' },
@@ -52,12 +51,11 @@ const rows = [
 ];
 
 const Trade = () => {
-  const { currentUser } = useContext(AuthContext);
   const getContracts = async () => {
     let contracts = [];
     try {
 
-      const res = await api.post('/consultant/contract_list', currentUser);
+      const res = await api.get('/consultant/contract_list');
        
       console.log(res.data);
       contracts = res.data;

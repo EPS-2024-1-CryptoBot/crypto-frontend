@@ -67,7 +67,7 @@ const Extract = () => {
         const json = JSON.stringify({ 'CBU BLOCKCHAIN': response.data.chain });
 
         const options = {
-          theme: 'dark', // "light" or "dark"
+          theme: 'light', // "light" or "dark"
           direction: 'RIGHT' // "UP", "DOWN", "LEFT", "RIGHT"
         };
 
@@ -102,89 +102,85 @@ const Extract = () => {
   }, []);
 
   return (
-    <div className="h-full">
-      <div className="h-full w-full flex flex-col items-center gap-10 p-4 md:p-10">
-        <div className="flex flex-col md:flex-row justify-center w-full">
-          <div className="w-full md:w-1/2 pt-[1rem] md:mr-5">
-            <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem]">
-              <span className="text-3xl">Saldo Atual (CBU) </span>
-              <div className="pt-4 text-6xl font-bold text-primary lg:text-8xl">
-                {formatBrlValue(balance)}
-              </div>
-            </div>
-            <div className="flex flex-row pt-2">
-              <div className="flex gap-4 w-full">
-                <Link to="/transfer" className="w-[50%]">
-                  <button className="bg-primary text-white rounded-md p-2 w-full">
-                    Transferir
-                  </button>
-                </Link>
-                <button
-                  className="bg-secondary text-white rounded-md p-2 w-[50%]"
-                  onClick={handleMine}>
-                  Minerar
-                </button>
-              </div>
+    <div className="h-full w-full flex flex-col items-center gap-10 p-4 md:p-10">
+      <div className="flex flex-col md:flex-row justify-center w-full">
+        <div className="w-full md:w-1/2 pt-[1rem] md:mr-5">
+          <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem]">
+            <span className="text-3xl">Saldo Atual (CBU) </span>
+            <div className="pt-4 text-6xl font-bold text-primary lg:text-8xl">
+              {formatBrlValue(balance)}
             </div>
           </div>
-          <div className="w-full md:w-1/2 pt-[1rem] ml-auto mr-auto">
-            <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem] flex flex-col justify-center items-end gap-2">
-              <iframe
-                id="jsoncrackEmbed"
-                src="https://jsoncrack.com/widget"
-                width={`100%`}
-                height={`100%`}
-                style={
-                  expandedIframe
-                    ? {
-                        position: 'fixed',
-                        width: '80%',
-                        height: '80%',
-                        transform: 'translate(-50%, -50%)',
-                        top: '50%',
-                        left: '50%'
-                      }
-                    : undefined
-                }
-              />
+          <div className="flex flex-row pt-2">
+            <div className="flex gap-4 w-full">
+              <Link to="/transfer" className="w-[50%]">
+                <button className="bg-primary text-white rounded-md p-2 w-full">Transferir</button>
+              </Link>
               <button
-                className="bg-primary p-2 rounded text-white"
-                onClick={() => setExpandedIframe(!expandedIframe)}>
-                {expandedIframe ? `Shrink` : `Expand`}
+                className="bg-secondary text-white rounded-md p-2 w-[50%]"
+                onClick={handleMine}>
+                Minerar
               </button>
             </div>
           </div>
         </div>
-        <div className="w-full h-[40%]">
-          <span className="text-xl md:text-4xl">Histórico de transações na blockchain</span>
-          <div className="overflow-scroll">
-            <table className=" w-full">
-              <thead>
-                <tr>
-                  <th>Enviado por</th>
-                  <th>Recebido por</th>
-                  <th>Valor</th>
-                </tr>
-              </thead>
-              <tbody>
-                {extrato.map((transaction: Transaction, index: number) => (
-                  <tr
-                    key={index}
-                    className="border-2 border-solid border-primary rounded-md p-4 min-h-[10rem]">
-                    <td className="text-center text-xl font-bold text-secondary">
-                      {transaction.sender}
-                    </td>
-                    <td className="text-center text-xl font-bold text-secondary">
-                      {transaction.receiver}
-                    </td>
-                    <td className="text-center text-xl font-bold text-secondary">
-                      R$ {transaction.amount}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+        <div className="w-full md:w-1/2 pt-[1rem] ml-auto mr-auto">
+          <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem] flex flex-col justify-center items-end gap-2">
+            <iframe
+              id="jsoncrackEmbed"
+              src="https://jsoncrack.com/widget"
+              width={`100%`}
+              height={`100%`}
+              style={
+                expandedIframe
+                  ? {
+                      position: 'fixed',
+                      width: '80%',
+                      height: '80%',
+                      transform: 'translate(-50%, -50%)',
+                      top: '50%',
+                      left: '50%'
+                    }
+                  : undefined
+              }
+            />
+            <button
+              className="bg-primary p-2 rounded text-white"
+              onClick={() => setExpandedIframe(!expandedIframe)}>
+              {expandedIframe ? `Shrink` : `Expand`}
+            </button>
           </div>
+        </div>
+      </div>
+      <div className="w-full h-[40%]">
+        <span className="text-xl md:text-4xl">Histórico de transações na blockchain</span>
+        <div className="">
+          <table className=" w-full">
+            <thead>
+              <tr>
+                <th>Enviado por</th>
+                <th>Recebido por</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {extrato.map((transaction: Transaction, index: number) => (
+                <tr
+                  key={index}
+                  className="border-2 border-solid border-primary rounded-md p-4 min-h-[10rem]">
+                  <td className="text-center text-xl font-bold text-secondary">
+                    {transaction.sender}
+                  </td>
+                  <td className="text-center text-xl font-bold text-secondary">
+                    {transaction.receiver}
+                  </td>
+                  <td className="text-center text-xl font-bold text-secondary">
+                    R$ {transaction.amount}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
