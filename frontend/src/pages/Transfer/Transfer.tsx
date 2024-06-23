@@ -4,7 +4,7 @@ import { addTransaction, getUserDestination } from './routes';
 import { AuthContext } from '../../contexts/authContext';
 
 const Transfer = () => {
-  const { user } = useContext(AuthContext);
+  const { currentUser: user } = useContext(AuthContext);
   const [destination, setDestination] = useState(null);
   const [infoDestination, setInfoDestination] = useState(null as any);
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ const Transfer = () => {
     setLoading(true);
     setMessage('');
     const destination = (event.target as any).destination.value;
-  
+
     try {
       const res = await getUserDestination(destination);
       console.log(res);
@@ -26,13 +26,12 @@ const Transfer = () => {
       if (error.response && error.response.data && error.response.data.message) {
         setMessage(error.response.data.message);
       } else {
-        setMessage('Failed to get destination information.');
+        setMessage('Falha ao buscar informações do destinatário.');
       }
     } finally {
       setLoading(false);
     }
   };
-  
 
   const handleTransfer = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -45,11 +44,11 @@ const Transfer = () => {
     };
 
     try {
-      const res = await addTransaction(user?.uid, payload);
+      const res = await addTransaction(user?.firebaseUid, payload);
       console.log(res);
-      setMessage('Transfer successful!');
+      setMessage('Transferência realizada com sucesso.');
     } catch (error) {
-      setMessage('Transfer failed.');
+      setMessage('Transferência falhou.');
     } finally {
       setLoading(false);
     }
