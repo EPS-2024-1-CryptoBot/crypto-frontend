@@ -18,7 +18,7 @@ const CryptoBot = () => {
     if (user && user.api_token_binance && user.binance_api_secret) {
       setApiTokenBinance(user.api_token_binance);
       setBinanceApiSecret(user.binance_api_secret);
-    } 
+    }
     setLoading(false);
   }, [user]);
 
@@ -34,32 +34,34 @@ const CryptoBot = () => {
 
   return (
     <div>
-      {(apiTokenBinance && binanceApiSecret) ?
-      <div className="w-full h-screen bg-gray-900 text-white">
-        <div className="w-full h-[90vh] flex flex-wrap border-2 border-gray-600">
-          <div className="w-[40%] h-[50%] border-2 border-gray-600">
-            <Trade />
-          </div>
-          <div className="w-[60%] h-[100%] overflow-auto border-2 border-gray-600">
-            <Strategies />
-          </div>
-          <div className="w-[40%] h-[50%] overflow-auto border-2 border-gray-600">
-            <Logging />
-          </div>
-          <div className="w-[60%] h-[50%] overflow-auto border-2 border-gray-600">
-            <Watchlist />
-          </div>
-        </div>
-      </div>
-      :
-      <div>
-        <div className="flex justify-center items-center h-screen">
-          <div>
-           <Link to="/profile">Adicione uma chave de API para continuar</Link>
+      {apiTokenBinance && binanceApiSecret ? (
+        <div className="w-full h-screen bg-gray-900 text-white">
+          <div className="w-full h-[90vh] flex flex-wrap border-2 border-gray-600">
+            <div className="w-[40%] h-[50%] border-2 border-gray-600">
+              <Trade />
+            </div>
+            <div className="w-[60%] h-[100%] overflow-auto border-2 border-gray-600">
+              <Strategies />
+            </div>
+            <div className="w-[40%] h-[50%] overflow-auto border-2 border-gray-600">
+              <Logging />
+            </div>
+            <div className="w-[60%] h-[50%] overflow-auto border-2 border-gray-600">
+              <Watchlist />
+            </div>
           </div>
         </div>
-      </div>
-      }
+      ) : (
+        <div>
+          <div className="flex justify-center items-center h-screen">
+            <Link to="/profile" className="text-white-500">
+              <div className="text-center w-full max-w-md p-4 bg-secondary rounded shadow-md m-5 mx-auto border-2 border-gray-600 text-white hover:bg-primary hover:border-primary hover:transition hover:duration-500">
+                Clique aqui para adicionar suas chaves de API da Binance
+              </div>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,10 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../contexts/authContext';
 import { api } from '../../config/api';
+import ConfirmationModal from './componentes/ConfirmationModal';
 
 const Profile = () => {
   const { user, newCurrentUser, currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     console.log('user no useEffect', currentUser);
@@ -24,8 +27,13 @@ const Profile = () => {
   };
 
   const handleEditProfile = async (event: React.FormEvent) => {
-    setLoading(true);
     event.preventDefault();
+    setShowModal(true);
+  };
+
+  const handleConfirmEditProfile = async () => {
+    setLoading(true);
+    setShowModal(false);
     try {
       const response = await api.put(`users/${user?.id}`, {
         firstName: (document.getElementById('name') as HTMLInputElement).value,
@@ -35,8 +43,10 @@ const Profile = () => {
         binance_api_secret: (document.getElementById('binance_api_secret') as HTMLInputElement)
           .value
       });
+      if(!response.data.success) {
+        setError(response.data.message);
+      }
 
-      console.log('RESPONSE', response);
       const new_user = response.data;
       newCurrentUser(new_user);
     } catch (error) {
@@ -119,8 +129,16 @@ const Profile = () => {
               {loading ? 'Carregando...' : 'Salvar'}
             </button>
           </form>
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
         </div>
       </div>
+      
+      <ConfirmationModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleConfirmEditProfile}
+        loading={loading}
+      />
     </div>
   );
 };
