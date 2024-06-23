@@ -25,6 +25,8 @@ interface AuthContextType {
   setLoading: (loading: boolean) => void;
   loading: boolean;
   setCurrentUser: (user: User | null) => void;
+  newCurrentUser: (user: User) => void;
+  currentUser: any;
 }
 
 export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
@@ -34,7 +36,7 @@ const saveToken = (token: string) => {
 }
 
 const AuthProvider = ({ children }: any) => {
-  const [currentUser, setCurrentUser] = useState<User | null>();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(false);
 
   // Signs in on firebase with email and password and then validates the user on the backend
@@ -90,8 +92,8 @@ const AuthProvider = ({ children }: any) => {
             lastName,
             firebaseUid: user.uid
           });
-
-          setCurrentUser(user);
+          
+          setCurrentUser(result.data.user);
 
           if (result.data.token) {
             saveToken(result.data.token); 
@@ -111,6 +113,17 @@ const AuthProvider = ({ children }: any) => {
     setLoading(false);
     return result;
   };
+
+  const newCurrentUser = async (user: any) => {
+    console.log('newCurrentUser', user);
+    const token = localStorage.getItem('token');
+    console.log('token', token);
+    const res = await api.get(`/users/${user.id}`);
+    console.log('res', res);
+    console.log('newCurrentUser', res.data);
+    setCurrentUser(res.data);
+  };
+  
 
   const signInWithGoogle = async () => {
     const auth = getAuth(app);
@@ -172,7 +185,9 @@ const AuthProvider = ({ children }: any) => {
         signInWithGoogle,
         setLoading,
         setCurrentUser,
-        loading
+        loading,
+        newCurrentUser,
+        currentUser,
       }}>
       {!loading && children}
     </AuthContext.Provider>

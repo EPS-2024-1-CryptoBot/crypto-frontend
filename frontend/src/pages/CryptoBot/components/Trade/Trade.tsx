@@ -1,3 +1,5 @@
+import { api } from "../../../../config/api";
+
 
 const rows = [
   { symbol: 'BTC/USD', bid: '45000', ask: '45100' },
@@ -8,34 +10,65 @@ const rows = [
 ];
 
 const Trade = () => {
+  const getContracts = async () => {
+    let contracts = [];
+    try {
+
+      const res = await api.get('/consultant/contract_list');
+       
+      console.log(res.data);
+      contracts = res.data;
+    } catch (error) {
+      console.log(error);
+    }
+
+    return contracts;
+  };
+
+  
   return (
-    <div className="text-center w-full h-full mt-4">
+    <div className="text-center w-full h-full mt-4 bg-gray-900">
       <div className="mb-4">
         <input
           type="text"
           placeholder="Binance"
           className="mr-2 p-2 border border-gray-300 rounded text-black"
         />
+        <button className="p-2 ml-1 bg-blue-500 text-white rounded" onClick={getContracts}>Search</button>
       </div>
       <div className="overflow-auto h-full">
-        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Cripto</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Compra (U$)</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Venda (U$)</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row, index) => (
-              <tr key={index}>
-                <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">{row.symbol}</td>
-                <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">{row.bid}</td>
-                <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">{row.ask}</td>
+        <div className="min-w-full bg-gray-800 shadow-md">
+          <table className="w-full">
+            <thead>
+              <tr>
+                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
+                  Cripto
+                </th>
+                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
+                  Compra (U$)
+                </th>
+                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
+                  Venda (U$)
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.map((row, index) => (
+                <tr key={index}>
+                  <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+                    {row.symbol}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+                    {row.bid}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
+                    {row.ask}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,9 @@ export const formatInputValue = (value: string): string => {
 
   const firstDotIndex = sanitizedValue.indexOf('.');
   if (firstDotIndex !== -1) {
-    sanitizedValue = sanitizedValue.slice(0, firstDotIndex + 1) + sanitizedValue.slice(firstDotIndex + 1).replace(/\./g, '');
+    sanitizedValue =
+      sanitizedValue.slice(0, firstDotIndex + 1) +
+      sanitizedValue.slice(firstDotIndex + 1).replace(/\./g, '');
   }
 
   const numericValue = parseFloat(sanitizedValue);
@@ -15,4 +17,11 @@ export const formatInputValue = (value: string): string => {
   }
 
   return sanitizedValue;
+};
+
+export const formatBrlValue = (value: number) => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(value);
 };
