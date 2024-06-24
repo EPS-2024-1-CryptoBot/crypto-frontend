@@ -5,23 +5,23 @@ const News = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    // const fetchNews = async () => {
-    //   try {
-    //     const response = await api.get('news/top', {
-    //       params: {
-    //         search: 'crypto'
-    //       }
-    //     });
-    //     console.log('response.data', response.data);
-    //     setNews(response.data.data);
-    //   } catch (error) {
-    //     console.error('Erro ao buscar notícias:', error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
+    const fetchNews = async () => {
+      try {
+        const response = await api.get('news/top', {
+          params: {
+            search: 'crypto'
+          }
+        });
+        console.log('response.data', response.data);
+        setNews(response.data.data);
+      } catch (error) {
+        console.error('Erro ao buscar notícias:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // fetchNews();
+    fetchNews();
   }, []);
 
   if (loading) {

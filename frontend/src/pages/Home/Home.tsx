@@ -33,7 +33,7 @@ const Home = () => {
   }, [response]);
 
   const handleInputChange = (e: any) => {
-    setQuestion(e.target.value + '\n\n' + prompt);
+    setQuestion(e.target.value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,7 +44,7 @@ const Home = () => {
     setDisplayedResponse('');
 
     try {
-      const res = await postWithRetry('pitch/completion', { question: question });
+      const res = await postWithRetry('pitch/completion', { question: question + '\n\n\n' + prompt });
       console.log(res);
       setResponse(res.completion);
     } catch (err) {
