@@ -31,7 +31,7 @@ const Extract = () => {
   const { currentUser } = useContext(AuthContext);
   const [balance, setBalance] = useState(0);
   const [extrato, setExtrato] = useState([]);
-  const [, setBlockchain] = useState<Block[]>([]);
+  const [blockchain, setBlockchain] = useState<Block[]>([]);
   const [expandedIframe, setExpandedIframe] = useState(false);
 
   const handleBalance = async () => {
@@ -119,8 +119,10 @@ const Extract = () => {
                 <button className="bg-primary text-white rounded-md p-2 w-full">Transferir</button>
               </Link>
               <button
-                className="bg-secondary text-white rounded-md p-2 w-[50%]"
+                className="bg-secondary text-white rounded-md p-2 w-[50%] disabled:opacity-45"
+                disabled={!blockchain?.[0]?.index}
                 onClick={handleMine}>
+                  
                 Minerar
               </button>
             </div>
