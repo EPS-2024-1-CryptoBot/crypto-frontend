@@ -106,11 +106,11 @@ const Navbar = () => {
           </li>
           {user && (
             <>
-              <li>
+              {/* <li>
                 <Link to="/buy-crypto" className="text-white hover:underline">
                   Carteira
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/extract" className="text-white hover:underline">
                   Extrato
@@ -123,7 +123,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link to="/crypto-bot" className="text-white hover:underline">
-                  Crypto Bot
+                  CryptoBot
                 </Link>
               </li>
               <li>
@@ -133,7 +133,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link to="/stock" className="text-white hover:underline">
-                  Consultor de Acoes
+                  Consultor de Ações
                 </Link>
               </li>
               <li>

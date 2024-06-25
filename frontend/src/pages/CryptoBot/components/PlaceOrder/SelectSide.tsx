@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const timeframes = ['1m', '5m', '15m', '30m', '1h', '4h'];
+const sides = ['Buy', 'Sell'];
 
-interface SelectTimeframeProps {
+interface SelectSideProps {
+  onSelect: (side: string) => void;
   disabled?: boolean;
 }
 
-const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
+const SelectSide: React.FC<SelectSideProps> = ({ onSelect, disabled }) => {
   const [isActive, setIsActive] = useState(false);
-  const [selected, setSelected] = useState('Timeframe');
+  const [selected, setSelected] = useState('Escolha...');
 
   const toggleActive = () => {
     if (!disabled) {
@@ -17,16 +18,17 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
     }
   };
 
-  const handleSelect = (timeframe: string) => {
-    setSelected(timeframe);
+  const handleSelect = (side: string) => {
+    setSelected(side);
+    onSelect(side);
     setIsActive(false);
   };
 
   return (
-    <div className="relative mt-2">
+    <div>
       <button
-        className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
-        onClick={toggleActive}
+      className={`border border-gray-400 p-2 w-32 rounded cursor-pointer flex justify-between items-center ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+      onClick={toggleActive}
       >
         <span>{selected}</span>
         {isActive ? (
@@ -36,18 +38,18 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
         )}
       </button>
       {isActive && !disabled && (
-        <div className="border border-gray-400 rounded mt-1 w-52 absolute z-10 bg-white p-2">
+        <div className="border border-gray-400 rounded mt-1 w-32 absolute bg-white p-2">
           <ul className="max-h-64 overflow-auto text-sm text-left text-black">
-            {timeframes.length ? (
-              timeframes.map((timeframe) => (
+            {sides.length ? (
+              sides.map((side) => (
                 <option
-                  key={timeframe}
+                  key={side}
                   className={`cursor-pointer p-1 rounded ${
-                    timeframe === selected ? 'bg-gray-200' : ''
+                    side === selected ? 'bg-gray-200' : ''
                   }`}
-                  onClick={() => handleSelect(timeframe)}
+                  onClick={() => handleSelect(side)}
                 >
-                  {timeframe}
+                  {side}
                 </option>
               ))
             ) : (
@@ -60,4 +62,4 @@ const SelectTimeframe: React.FC<SelectTimeframeProps> = ({ disabled }) => {
   );
 };
 
-export default SelectTimeframe;
+export default SelectSide;

@@ -2,52 +2,11 @@ import { api } from "../../../../config/api";
 
 
 const rows = [
-  { symbol: 'BTC/USD', exchange: 'Binance', bid: '45000', ask: '45100' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' },
-  { symbol: 'ETH/USD', exchange: 'Bitmex', bid: '2800', ask: '2810' },
-  { symbol: 'XRP/USD', exchange: 'Bitmex', bid: '1.05', ask: '1.06' },
-  { symbol: 'LTC/USD', exchange: 'Binance', bid: '160', ask: '161' },
-  { symbol: 'ADA/USD', exchange: 'Binance', bid: '1.45', ask: '1.46' },
-  { symbol: 'DOT/USD', exchange: 'Bitmex', bid: '25', ask: '25.1' }
+  { symbol: 'BTC/USD', bid: '45000', ask: '45100' },
+  { symbol: 'ETH/USD', bid: '1.05', ask: '1.06' },
+  { symbol: 'LTC/USD', bid: '160', ask: '161' },
+  { symbol: 'ADA/USD', bid: '1.45', ask: '1.46' },
+  { symbol: 'DOT/USD',bid: '25', ask: '25.1' }
 ];
 
 const Trade = () => {
@@ -75,12 +34,7 @@ const Trade = () => {
           placeholder="Binance"
           className="mr-2 p-2 border border-gray-300 rounded text-black"
         />
-        <input
-          type="text"
-          placeholder="Bitmex"
-          className="p-2 border border-gray-300 rounded text-black"
-        />
-        <button className="p-2 bg-blue-500 text-white rounded" onClick={getContracts}>Search</button>
+        <button className="p-2 ml-1 bg-blue-500 text-white rounded" onClick={getContracts}>Search</button>
       </div>
       <div className="overflow-auto h-full">
         <div className="min-w-full bg-gray-800 shadow-md">
@@ -88,16 +42,13 @@ const Trade = () => {
             <thead>
               <tr>
                 <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
-                  Symbol
+                  Cripto
                 </th>
                 <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
-                  Exchange
+                  Compra (U$)
                 </th>
                 <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
-                  Bid (U$)
-                </th>
-                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
-                  Ask (U$)
+                  Venda (U$)
                 </th>
               </tr>
             </thead>
@@ -106,9 +57,6 @@ const Trade = () => {
                 <tr key={index}>
                   <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
                     {row.symbol}
-                  </td>
-                  <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-                    {row.exchange}
                   </td>
                   <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
                     {row.bid}
