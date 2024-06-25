@@ -165,52 +165,6 @@ const PlaceOrder: React.FC = () => {
       );
     }
 
-    if (order.orderType === 'Stop' || order.orderType === 'Take Profit') {
-      return (
-        <div className="flex space-x-2">
-          <input
-            type="text"
-            className="p-2 border border-gray-300 rounded text-black w-28"
-            placeholder="Quantidade"
-            value={order.quantity ?? ''}
-            onChange={(e) => handleInputChange(index, 'quantity', e.target.value)}
-            disabled={order.isActive}
-            maxLength={8}
-            data-tooltip-id='qt-tooltip'
-            data-tooltip-content="Quantidade. Ex.: 0.02"
-            data-tooltip-place='top'
-          />
-          <Tooltip id="qt-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }}/>
-          <input
-            type="text"
-            className="p-2 border border-gray-300 rounded text-black w-24"
-            placeholder="Preço"
-            value={order.price ?? ''}
-            onChange={(e) => handleInputChange(index, 'price', e.target.value)}
-            disabled={order.isActive}
-            maxLength={8}
-            data-tooltip-id='price-tooltip'
-            data-tooltip-content="Preço. Ex.: 99.9 (U$)"
-            data-tooltip-place='top'
-          />
-          <Tooltip id="price-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }} />
-          <input
-            type="text"
-            className="p-2 border border-gray-300 rounded text-black w-24"
-            placeholder="Stop Price"
-            value={order.stopPrice ?? ''}
-            onChange={(e) => handleInputChange(index, 'stopPrice', e.target.value)}
-            disabled={order.isActive}
-            maxLength={8}
-            data-tooltip-id='stop-price-tooltip'
-            data-tooltip-content="Preço de parada. Ex.: 99.9 (U$)"
-            data-tooltip-place='top'
-          />
-          <Tooltip id="stop-price-tooltip" opacity={2} style={{ backgroundColor: "rgb(16,89,127)", fontWeight: "bold" }}/>
-        </div>
-      );
-    }
-
     return null;
   };
 
@@ -278,15 +232,15 @@ const PlaceOrder: React.FC = () => {
         Nova Oferta
       </button>
       <div className="max-h-full">
-        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md text-center items-center">
+        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
           <thead>
             <tr>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Cripto</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Lado</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Tipo de Oferta</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parâmetros</th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
-              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Cripto</th>
+              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Compra/Venda</th>
+              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Tipo de Oferta</th>
+              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parâmetros</th>
+              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
             </tr>
           </thead>
           <tbody>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
-const orderTypes = ['Market', 'Limit', 'Stop', 'Take Profit'];
+const orderTypes = ['Market', 'Limit'];
 
 interface SelectOrderTypeProps {
   onSelect: (orderType: string) => void;
@@ -20,7 +20,7 @@ const SelectOrderType: React.FC<SelectOrderTypeProps> = ({ onSelect, disabled })
 
   const handleSelect = (orderType: string) => {
     setSelected(orderType);
-    onSelect(orderType); // Notify parent component of the selected orderType
+    onSelect(orderType);
     setIsActive(false);
   };
 
