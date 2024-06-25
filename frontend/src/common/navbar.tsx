@@ -106,11 +106,11 @@ const Navbar = () => {
           </li>
           {user && (
             <>
-              <li>
+              {/* <li>
                 <Link to="/buy-crypto" className="text-white hover:underline">
                   Carteira
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="/extract" className="text-white hover:underline">
                   Extrato
