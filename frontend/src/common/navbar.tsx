@@ -123,12 +123,17 @@ const Navbar = () => {
               </li>
               <li>
                 <Link to="/crypto-bot" className="text-white hover:underline">
-                  Crypto Bot
+                  CryptoBot
                 </Link>
               </li>
               <li>
                 <Link to="/consultor" className="text-white hover:underline">
                   Consultor
+                </Link>
+              </li>
+              <li>
+                <Link to="/stock" className="text-white hover:underline">
+                  Consultor de Ações
                 </Link>
               </li>
               <li>

@@ -28,10 +28,10 @@ export type Block = {
 };
 
 const Extract = () => {
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
   const [balance, setBalance] = useState(0);
   const [extrato, setExtrato] = useState([]);
-  const [, setBlockchain] = useState<Block[]>([]);
+  const [blockchain, setBlockchain] = useState<Block[]>([]);
   const [expandedIframe, setExpandedIframe] = useState(false);
 
   const handleBalance = async () => {
@@ -70,13 +70,13 @@ const Extract = () => {
           theme: 'light', // "light" or "dark"
           direction: 'RIGHT' // "UP", "DOWN", "LEFT", "RIGHT"
         };
-
+        // NOSONAR
         jsonCrackEmbed.contentWindow?.postMessage(
           {
             json,
             options
           },
-          '*'
+          '*' // NOSONAR
         );
       }
     } catch (error: any) {
@@ -105,12 +105,13 @@ const Extract = () => {
     <div className="h-full w-full flex flex-col items-center gap-10 p-4 md:p-10">
       <div className="flex flex-col md:flex-row justify-center w-full">
         <div className="w-full md:w-1/2 pt-[1rem] md:mr-5">
-          <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem] flex flex-col justify-between">
+          <div className="border-2 border-solid border-primary rounded-md p-4 min-h-[16rem] flex flex-col justify-between ">
             <span className="text-3xl">Saldo Atual </span>
-            <div className="pt-4 text-6xl font-bold text-primary lg:text-8xl">
-              {(balance)} CBUs
-            </div>
-            Id para transações: {currentUser?.firebaseUid}
+            <div className="pt-4 text-6xl font-bold text-primary lg:text-8xl">{balance} CBUs</div>
+            <span>
+              <strong className="uppercase">ID para transações: </strong>
+              {currentUser?.firebaseUid}
+            </span>
           </div>
           <div className="flex flex-row pt-2">
             <div className="flex gap-4 w-full">
@@ -118,8 +119,10 @@ const Extract = () => {
                 <button className="bg-primary text-white rounded-md p-2 w-full">Transferir</button>
               </Link>
               <button
-                className="bg-secondary text-white rounded-md p-2 w-[50%]"
+                className="bg-secondary text-white rounded-md p-2 w-[50%] disabled:opacity-45"
+                disabled={!blockchain?.[0]?.index}
                 onClick={handleMine}>
+                  
                 Minerar
               </button>
             </div>

@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './common/navbar';
 import Consultor from './pages/Consultor/Consultor';
+import ConsultorAcoes from './pages/ConsultorAcoes/ConsultorAcoes';
 import Crypto from './pages/Crypto/Crypto';
 import CryptoBot from './pages/CryptoBot/CryptoBot';
 import Exchange from './pages/Exchange/Exchange';
@@ -28,6 +29,7 @@ const AppRoutes = () => {
         <Route Component={Exchange} path="/exchange" />
         <Route Component={Extract} path="/extract" />
         <Route Component={Consultor} path="/consultor" />
+        <Route Component={ConsultorAcoes} path="/stock" />
       </Routes>
     </BrowserRouter>
   );
