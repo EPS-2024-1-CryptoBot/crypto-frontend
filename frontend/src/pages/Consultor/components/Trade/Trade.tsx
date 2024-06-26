@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { FaCrown } from "react-icons/fa";
+import { MdClose } from "react-icons/md";
 import { api } from "../../../../config/api";
 
 const Trade = () => {
@@ -6,6 +8,7 @@ const Trade = () => {
   const [filteredContracts, setFilteredContracts] = useState<{ [key: string]: any }>({});
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSymbols, setSelectedSymbols] = useState<{ [key: string]: any }>({});
+  const [showLimitModal, setShowLimitModal] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const getContracts = async () => {
@@ -16,6 +19,16 @@ const Trade = () => {
       setFilteredContracts(contractData);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getSymbolInfo = async (symbol: string) => {
+    try {
+      const res = await api.get(`/consultant/symbol_price?symbol=${symbol}`);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   };
 
@@ -36,18 +49,35 @@ const Trade = () => {
     setFilteredContracts(newFilteredContracts);
   };
 
-  const handleSymbolClick = (symbol: string) => {
+  const handleSymbolClick = async (symbol: string) => {
+    if (Object.keys(selectedSymbols).length >= 5) {
+      setShowLimitModal(true);
+      return;
+    }
+    const symbolInfo = await getSymbolInfo(symbol);
     setSelectedSymbols(prevState => ({
       ...prevState,
-      [symbol]: contracts[symbol]
+      [symbol]: {
+        ...contracts[symbol],
+        bid: symbolInfo?.bid,
+        ask: symbolInfo?.ask,
+      }
     }));
     setSearchTerm("");
-    setFilteredContracts(contracts);
+    setFilteredContracts(contracts); // Reset filtered contracts after selection
+  };
+
+  const handleDeleteSymbol = (symbol: string) => {
+    setSelectedSymbols(prevState => {
+      const newState = { ...prevState };
+      delete newState[symbol];
+      return newState;
+    });
   };
 
   return (
     <div className="text-center w-full h-full mt-4 bg-gray-900 overflow-hidden">
-      <div className="mb-4 relative inline-block">
+      <div className="my-5 relative inline-block">
         <input
           type="text"
           placeholder="Binance"
@@ -81,6 +111,13 @@ const Trade = () => {
                 <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
                   Símbolo
                 </th>
+                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
+                  Compra (U$)
+                </th>
+                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900">
+                  Venda (U$)
+                </th>
+                <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-900"></th>
               </tr>
             </thead>
             <tbody className="overflow-y-auto max-h-full">
@@ -89,12 +126,42 @@ const Trade = () => {
                   <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-sm">
                     {selectedSymbols[key].symbol}
                   </td>
+                  <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-sm">
+                    {selectedSymbols[key].bid}
+                  </td>
+                  <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-sm">
+                    {selectedSymbols[key].ask}
+                  </td>
+                  <td className="p-2 border-b border-gray-200 dark:border-gray-700 text-sm">
+                    <button
+                      className="p-2 bg-secondary border rounded"
+                      onClick={() => handleDeleteSymbol(selectedSymbols[key].symbol)}
+                    >
+                      <MdClose />
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {showLimitModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-4 rounded-lg shadow-md">
+            <p className="text-lg text-secondary font-bold flex justify-center items-center">
+              Atualize para o <span className="text-yellow-500 ml-1">Premium</span> <FaCrown className="text-yellow-500 ml-1" />
+            </p>
+            <p className="text-sm text-secondary mt-2">Atualize para um plano premium para visualizar mais de 5 criptos.</p>
+            <button
+              className="mt-6 px-4 py-2 bg-secondary text-white rounded"
+              onClick={() => setShowLimitModal(false)}
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

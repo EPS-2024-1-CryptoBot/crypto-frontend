@@ -24,7 +24,7 @@ const PlaceOrder: React.FC = () => {
   const [showLimitModal, setShowLimitModal] = useState(false);
 
   const addOrder = () => {
-    if (order.length < 10) {
+    if (order.length < 5) {
       setOrder([
         ...order,
         {
@@ -217,7 +217,7 @@ const PlaceOrder: React.FC = () => {
             <p className="text-lg text-secondary font-bold flex justify-center items-center">
               Atualize para o <span className="text-yellow-500 ml-1">Premium</span> <FaCrown className="text-yellow-500 ml-1" />
             </p>
-            <p className="text-sm text-secondary mt-2">Atualize para um plano premium para adicionar mais de 10 ofertas.</p>
+            <p className="text-sm text-secondary mt-2">Atualize para um plano premium para adicionar mais de 5 ofertas.</p>
             <button
               className="mt-6 px-4 py-2 bg-secondary text-white rounded"
               onClick={() => setShowLimitModal(false)}
@@ -227,7 +227,7 @@ const PlaceOrder: React.FC = () => {
           </div>
         </div>
       )}
-      <button className="my-8 p-2 bg-secondary text-white rounded" onClick={addOrder}>
+      <button className="mt-8 mb-7 p-2 bg-secondary text-white rounded" onClick={addOrder}>
         Nova Oferta
       </button>
       <div className="max-h-full">
