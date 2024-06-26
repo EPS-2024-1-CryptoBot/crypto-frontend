@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FaCrown } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { Tooltip } from 'react-tooltip';
-import { api } from '../../../../config/api';
 import { convertToDecimalNumber, formatQuantity, formatToCurrency } from '../../../../utils/utils';
 import SelectOrderType from './SelectOrderType';
 import SelectSide from './SelectSide';
@@ -31,7 +30,7 @@ const PlaceOrder: React.FC = () => {
           symbol: '',
           side: '',
           orderType: '',
-          quantity: '',
+          quantity:'',
           isActive: false,
         },
       ]);
@@ -44,36 +43,22 @@ const PlaceOrder: React.FC = () => {
     setOrder(order.filter((_, i) => i !== index));
   };
 
-  const toggleActive = async (index: number) => {
-    const updatedOrders = order.map((order, i) => {
-      if (i === index) {
-        return {
-          ...order,
-          isActive: !order.isActive,
-          side: order.side.toUpperCase(),
-          orderType: order.orderType.toUpperCase(),
-        };
-      }
-      return order;
-    });
-
-    setOrder(updatedOrders);
-
-    if (updatedOrders[index].isActive) {
-      try {
-        const response = await api.post('/place_order', {
-          symbol: updatedOrders[index].symbol,
-          side: updatedOrders[index].side,
-          order_type: updatedOrders[index].orderType,
-          quantity: parseFloat(updatedOrders[index].quantity),
-          price: parseFloat(updatedOrders[index].price ?? ''),
-          tif: updatedOrders[index].tif ?? '',
-        });
-        console.log('Order placed successfully:', response.data);
-      } catch (error) {
-        console.error('Error placing order:', error);
-      }
-    }
+  const toggleActive = (index: number) => {
+    setOrder(
+      order.map((order, i) => {
+        if (i === index) {
+          const updatedOrder = {
+            ...order,
+            isActive: !order.isActive,
+            side: order.side.toUpperCase(),
+            orderType: order.orderType.toUpperCase(), 
+          };
+          console.log(JSON.stringify(updatedOrder, null, 2));
+          return updatedOrder;
+        }
+        return order;
+      })
+    );
   };
 
   const handleInputChange = (index: number, field: keyof Order, value: string) => {
@@ -161,7 +146,7 @@ const PlaceOrder: React.FC = () => {
             value={order.price ?? ''}
             onChange={(e) => handleInputChange(index, 'price', e.target.value)}
             disabled={order.isActive}
-            maxLength={16}
+            maxLength={8}
             data-tooltip-id='price-tooltip'
             data-tooltip-content="Preço. Ex.: 99.9 (U$)"
             data-tooltip-place='top'
