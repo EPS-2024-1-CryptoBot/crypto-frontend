@@ -12,8 +12,8 @@ interface Order {
   symbol: string;
   side: string;
   orderType: string;
-  quantity: string;
   price?: string;
+  quantity: string;
   tif?: string;
   isActive: boolean;
 }
@@ -30,7 +30,7 @@ const PlaceOrder: React.FC = () => {
           symbol: '',
           side: '',
           orderType: '',
-          quantity:'',
+          quantity: '',
           isActive: false,
         },
       ]);
@@ -47,13 +47,8 @@ const PlaceOrder: React.FC = () => {
     setOrder(
       order.map((order, i) => {
         if (i === index) {
-          const updatedOrder = {
-            ...order,
-            isActive: !order.isActive,
-            side: order.side.toUpperCase(),
-            orderType: order.orderType.toUpperCase(), 
-          };
-          console.log(JSON.stringify(updatedOrder, null, 2));
+          const updatedOrder = { ...order, isActive: !order.isActive };
+          // console.log(JSON.stringify(updatedOrder, null, 2));
           return updatedOrder;
         }
         return order;
@@ -75,6 +70,14 @@ const PlaceOrder: React.FC = () => {
     setOrder(updatedOrders);
   };
 
+  const handleSymbolSelect = (index: number, symbol: string) => {
+    setOrder(
+      order.map((order, i) =>
+        i === index ? { ...order, symbol } : order
+      )
+    );
+  };
+
   const handleOrderTypeSelect = (index: number, orderType: string) => {
     setOrder(
       order.map((order, i) => {
@@ -82,23 +85,14 @@ const PlaceOrder: React.FC = () => {
           let updatedOrder: Order = { ...order, orderType };
 
           if (orderType === 'Market') {
-            updatedOrder = { ...updatedOrder, tif: undefined, price: undefined};
+            updatedOrder = { ...updatedOrder, tif: undefined, price: undefined };
           } else if (orderType === 'Limit') {
-            updatedOrder = { ...updatedOrder};
-          }
-
+            updatedOrder = { ...updatedOrder };
+          } 
           return updatedOrder;
         }
         return order;
       })
-    );
-  };
-
-  const handleSymbolSelect = (index: number, symbol: string) => {
-    setOrder(
-      order.map((order, i) =>
-        i === index ? { ...order, symbol } : order
-      )
     );
   };
 
@@ -183,10 +177,9 @@ const PlaceOrder: React.FC = () => {
     return order.map((order, index) => (
       <tr key={index}>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <SelectSymbol
+          <SelectSymbol 
           onSelect={(symbol) => handleSymbolSelect(index, symbol)}
-          disabled={order.isActive} 
-          />
+          disabled={order.isActive} />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectSide
@@ -242,19 +235,19 @@ const PlaceOrder: React.FC = () => {
           </div>
         </div>
       )}
-      <button className="mt-8 mb-7 p-2 bg-secondary text-white rounded" onClick={addOrder}>
+      <button className="my-8 p-2 bg-secondary text-white rounded" onClick={addOrder}>
         Nova Oferta
       </button>
       <div className="max-h-full">
-        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md">
+        <table className="min-w-full bg-white dark:bg-gray-800 shadow-md text-center items-center">
           <thead>
             <tr>
-              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Cripto</th>
-              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Compra/Venda</th>
-              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Tipo de Oferta</th>
-              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parâmetros</th>
-              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
-              <th className="py-2 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Cripto</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Compra/Venda</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Tipo de Oferta</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900">Parâmetros</th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
+              <th className="py-2 px-4 border-b-2 border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-900"></th>
             </tr>
           </thead>
           <tbody>
