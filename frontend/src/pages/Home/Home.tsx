@@ -44,7 +44,7 @@ const Home = () => {
     setDisplayedResponse('');
 
     try {
-      const res = await postWithRetry('pitch/completion', { question: question + '\n\n\n' + prompt });
+      const res = await postWithRetry('pitch/completion', { question: question + '\n\n\n' + prompt, userId: 1 });
       console.log(res);
       setResponse(res.pitchText);
     } catch (err) {
