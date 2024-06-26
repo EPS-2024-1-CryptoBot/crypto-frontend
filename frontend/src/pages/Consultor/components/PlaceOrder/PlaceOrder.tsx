@@ -48,7 +48,6 @@ const PlaceOrder: React.FC = () => {
       order.map((order, i) => {
         if (i === index) {
           const updatedOrder = { ...order, isActive: !order.isActive };
-          // console.log(JSON.stringify(updatedOrder, null, 2));
           return updatedOrder;
         }
         return order;
