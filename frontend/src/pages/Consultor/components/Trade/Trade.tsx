@@ -64,7 +64,7 @@ const Trade = () => {
       }
     }));
     setSearchTerm("");
-    setFilteredContracts(contracts); // Reset filtered contracts after selection
+    setFilteredContracts(contracts);
   };
 
   const handleDeleteSymbol = (symbol: string) => {
@@ -80,7 +80,7 @@ const Trade = () => {
       <div className="my-5 relative inline-block">
         <input
           type="text"
-          placeholder="Binance"
+          placeholder="Procure por uma cripto..."
           className="mr-2 p-2 border border-gray-300 rounded text-black"
           value={searchTerm}
           onChange={handleSearchChange}

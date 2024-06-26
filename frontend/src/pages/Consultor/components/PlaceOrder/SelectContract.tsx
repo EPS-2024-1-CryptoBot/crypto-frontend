@@ -1,27 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-
-const cryptocurrencies = [
-  'Bitcoin (Binance)',
-  'Ethereum',
-  'Ripple',
-  'Litecoin',
-  'Cardano',
-  'Polkadot',
-  'Chainlink',
-  'Stellar',
-  'Dogecoin',
-  'Solana'
-];
+import { api } from '../../../../config/api';
 
 interface SelectContractProps {
   disabled?: boolean;
+  onSelect: (symbol: string) => void; // Callback function to handle symbol selection
 }
 
-const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
+const SelectContract: React.FC<SelectContractProps> = ({ disabled, onSelect }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setSelected] = useState('Escolha a cripto...');
   const [filter, setFilter] = useState('');
+  const [cryptocurrencies, setCryptocurrencies] = useState<{ symbol: string }[]>([]);
+
+  useEffect(() => {
+    const getContracts = async () => {
+      try {
+        const res = await api.get('/consultant/contract_list');
+        const contractData = res.data;
+        const cryptoList = Object.keys(contractData).map(key => ({
+          symbol: contractData[key].symbol,
+        }));
+        setCryptocurrencies(cryptoList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getContracts();
+  }, []);
 
   const toggleActive = () => {
     if (!disabled) {
@@ -33,10 +39,11 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
     setSelected(crypto);
     setFilter('');
     setIsActive(false);
+    onSelect(crypto);
   };
 
   const filteredCryptos = cryptocurrencies.filter((crypto) =>
-    crypto.toLowerCase().includes(filter.toLowerCase())
+    crypto.symbol.toLowerCase().includes(filter.toLowerCase())
   );
 
   return (
@@ -66,13 +73,13 @@ const SelectContract: React.FC<SelectContractProps> = ({ disabled }) => {
             {filteredCryptos.length ? (
               filteredCryptos.map((crypto) => (
                 <option
-                  key={crypto}
+                  key={crypto.symbol}
                   className={`cursor-pointer p-1 rounded ${
-                    crypto === selected ? 'bg-gray-200' : ''
+                    crypto.symbol === selected ? 'bg-gray-200' : ''
                   }`}
-                  onClick={() => handleSelect(crypto)}
+                  onClick={() => handleSelect(crypto.symbol)}
                 >
-                  {crypto}
+                  {crypto.symbol}
                 </option>
               ))
             ) : (
