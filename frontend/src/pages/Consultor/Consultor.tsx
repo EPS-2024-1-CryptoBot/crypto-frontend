@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { FaArrowRight } from 'react-icons/fa';
 import { AuthContext } from '../../contexts/authContext';
 import PlaceOrder from './components/PlaceOrder/PlaceOrder';
 import Trade from './components/Trade/Trade';
@@ -42,9 +42,17 @@ const Consultor = () => {
           </div>
         </div>
         :
-        <div className="flex justify-center items-center h-screen">
-          <div>
-            <Link to="/profile">Adicione uma chave de API para continuar</Link>
+        <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-800 bg-opacity-75">
+          <div className="bg-white p-6 rounded-lg shadow-md text-center">
+            <p className="text-lg text-secondary font-bold">
+              Ops... Parece que você ainda não possui chaves cadastradas!
+            </p>
+            <button
+              className="mt-6 px-4 py-2 bg-secondary text-white rounded flex items-center justify-center mx-auto"
+              onClick={() => window.location.href = "/profile"}
+            >
+              Ir para o perfil <FaArrowRight className="ml-2" />
+            </button>
           </div>
         </div>
       }
