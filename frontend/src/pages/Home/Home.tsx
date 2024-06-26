@@ -46,7 +46,7 @@ const Home = () => {
     try {
       const res = await postWithRetry('pitch/completion', { question: question + '\n\n\n' + prompt });
       console.log(res);
-      setResponse(res.completion);
+      setResponse(res.pitchText);
     } catch (err) {
       setError('Erro ao obter a resposta do chatbot.');
     } finally {
