@@ -16,9 +16,9 @@ const CryptoBot = () => {
   const otherOS: OS[] = ['Windows', 'MacOS', 'Linux'].filter(os => os !== userOS) as OS[];
 
   const downloadLinks: Record<OS, string> = {
-    Windows: '/downloads/cryptobot_windows/cryptobot.zip',
-    MacOS: '/downloads/cryptobot_macos/cryptobot.zip',
-    Linux: '/downloads/cryptobot_linux/cryptobot.zip',
+    Windows: 'https://www.dropbox.com/scl/fi/do7cd7vo5e7a1pven7qnt/cryptobot_windows.zip?rlkey=qeb0r3oyix26aj9vxrl49wkod&st=5lomylo4&dl=1',
+    MacOS: 'https://www.dropbox.com/scl/fi/z4mzlcg7jb9yl6so3db5s/cryptobot_macOS.zip?rlkey=4plp0wsixs83ll538v71g98iy&st=hm09wze5&dl=1',
+    Linux: 'https://www.dropbox.com/scl/fi/rqpeevubnqx24zdhz4i19/cryptobot_linux.zip?rlkey=865arhu5cncdnunos61n1lnq7&st=pnpba8yq&dl=1',
   };
 
   return (
