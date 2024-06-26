@@ -3,9 +3,9 @@ import { FaCrown } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import { Tooltip } from 'react-tooltip';
 import { convertToDecimalNumber, formatQuantity, formatToCurrency } from '../../../../utils/utils';
-import SelectContract from './SelectContract';
 import SelectOrderType from './SelectOrderType';
 import SelectSide from './SelectSide';
+import SelectSymbol from './SelectSymbol';
 import SelectTIF from './SelectTIF';
 
 interface Order {
@@ -47,7 +47,13 @@ const PlaceOrder: React.FC = () => {
     setOrder(
       order.map((order, i) => {
         if (i === index) {
-          const updatedOrder = { ...order, isActive: !order.isActive };
+          const updatedOrder = {
+            ...order,
+            isActive: !order.isActive,
+            side: order.side.toUpperCase(),
+            orderType: order.orderType.toUpperCase(), 
+          };
+          console.log(JSON.stringify(updatedOrder, null, 2));
           return updatedOrder;
         }
         return order;
@@ -59,7 +65,7 @@ const PlaceOrder: React.FC = () => {
     let updatedValue = value;
     if (field === 'quantity') {
       updatedValue = formatQuantity(value);
-    } else if (field === 'price' || field === 'stopPrice') {
+    } else if (field === 'price') {
       updatedValue = formatToCurrency(convertToDecimalNumber(value));
     }
 
@@ -79,14 +85,20 @@ const PlaceOrder: React.FC = () => {
             updatedOrder = { ...updatedOrder, tif: undefined, price: undefined, stopPrice: undefined };
           } else if (orderType === 'Limit') {
             updatedOrder = { ...updatedOrder, stopPrice: undefined };
-          } else if (orderType === 'Stop' || orderType === 'Take Profit') {
-            updatedOrder = { ...updatedOrder, tif: undefined };
           }
 
           return updatedOrder;
         }
         return order;
       })
+    );
+  };
+
+  const handleSymbolSelect = (index: number, symbol: string) => {
+    setOrder(
+      order.map((order, i) =>
+        i === index ? { ...order, symbol } : order
+      )
     );
   };
 
@@ -171,7 +183,10 @@ const PlaceOrder: React.FC = () => {
     return order.map((order, index) => (
       <tr key={index}>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
-          <SelectContract disabled={order.isActive} />
+          <SelectSymbol
+          onSelect={(symbol) => handleSymbolSelect(index, symbol)}
+          disabled={order.isActive} 
+          />
         </td>
         <td className="py-2 px-4 border-b border-gray-200 dark:border-gray-700">
           <SelectSide
