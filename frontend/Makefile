@@ -29,6 +29,8 @@ help:
 ## DEV
 dev: build-dev
 	docker-compose -f docker-compose.dev.yaml up
+bigbang: build-dev
+	docker-compose -f docker-compose.dev.yaml up -d
 build-dev:
 	docker build -t crypto-frontend:dev -f Dockerfile.dev .
 run-dev:
